@@ -2,13 +2,18 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
+from dotenv import load_dotenv
+load_dotenv()
+
 import os
+
+dburl = os.environ.get('DATABASE_URL')
 
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 # I dunno what this is for
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://postgres:4214@localhost:5432/objectdb"
+app.config['SQLALCHEMY_DATABASE_URI'] = dburl
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app) # init orm for building tables/fields/constraints
