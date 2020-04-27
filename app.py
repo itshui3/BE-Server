@@ -46,29 +46,12 @@ class User(db.Model):
         self.use_item = use_item
         self.examine = examine
 
-    def __init__(self, username):
-        self.username = username
-
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(20), unique=True)
     description = db.Column(db.String(1024))
     items = db.Column(db.String(1024))
     NPCs = db.Column(db.String(1024))
-    # north
-    # east
-    # south
-    # west
-    def __init__(self, name):
-        self.name = name
-
-class UserSchema(ma.Schema):
-    class Meta:
-        fields = ('id', 'username')
-
-user_schema = UserSchema()
-users_schema = UserSchema(many=True)
-
     def __init__(self, title, description, items, NPCs, north, east, south, west):
         self.title = title
         self.description = description
@@ -127,6 +110,12 @@ class Item:
         self.action = action
         self.resuseable = reusable
 
+class UserSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'username')
+
+user_schema = UserSchema()
+users_schema = UserSchema(many=True)
 
 @app.route('/', methods=['GET'])
 def get_index():
