@@ -14,8 +14,8 @@ import os
 
 db = SQLAlchemy()  # init orm for building tables/fields/constraints
 
-CORS_ORIGIN = os.environ.get("CORS_ORIGIN")
 
+CORS_ORIGIN = os.environ.get("CORS_ORIGIN")
 
 def create_app():
     app = Flask(__name__)
@@ -31,11 +31,19 @@ def create_app():
     login_manager.init_app(app)
 
     migrate = Migrate(app, db)
-
     db.init_app(app)
 
-    from .auth import auth
+    # Route Registry
+    # from .public import public
+    # app.register_blueprint(public)
 
+    # Auth Routes
+    from .auth import auth
     app.register_blueprint(auth)
+
+    playerPrefix = '/player'
+    # player Routes
+    from .movement import movement
+    app.register_blueprint(movement, url_prefix=playerPrefix + '/movement')
 
     return app

@@ -45,7 +45,7 @@ def login():
 @auth.route("/registration/", methods=["POST"])
 def register_request():
     req = request.json
-
+    print(req)
     user = Users.query.filter_by(username=req["username"]).first()
 
     # if a user is found, return an error

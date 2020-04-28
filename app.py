@@ -3,7 +3,6 @@ from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from flask_marshmallow import Marshmallow
 from src import db
-print(db)
 
 app = create_app()
 
@@ -14,12 +13,12 @@ manager.add_command('db', MigrateCommand)
 
 ma = Marshmallow(app) # init marshmallow
 
-# class UserSchema(ma.Schema):
-#     class Meta:
-#         fields = ('id', 'username')
+class UserSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'username')
 
-# user_schema = UserSchema()
-# users_schema = UserSchema(many=True)
+user_schema = UserSchema()
+users_schema = UserSchema(many=True)
 
 if __name__ == '__main__':
     manager.run()
