@@ -1,9 +1,10 @@
+from flask_login import UserMixin
 from __init__ import db
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+class Users(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)  # primary keys are required by SQLAlchemy
     username = db.Column(db.String(100), unique=True)
-    #password = db.Column(). Hi jimmy
+    password = db.Column(db.String(100))
     character_name = db.Column(db.String(100))
     character_type = db.Column(db.String(100))
     portrait = db.Column(db.String(1024))
@@ -100,3 +101,10 @@ class Item:
         self.price = price
         self.action = action
         self.resuseable = reusable
+
+class Users(UserMixin, db.Model):
+    id = db.Column(
+        db.Integer, primary_key=True
+    )  # primary keys are required by SQLAlchemy
+    username = db.Column(db.String(100), unique=True)
+    password = db.Column(db.String(100))
