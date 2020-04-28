@@ -1,41 +1,62 @@
 from flask import Blueprint, request
 import jwt
 import os
-# from somewhere import User
-# from somewhere import Room
-# from .models import Users
 from . import db
-from .models import Users
+from .models import Users, Room
 
 movement = Blueprint('movement', __name__)
 JWT_SECRET = os.environ.get("SECRET")
-@movement.route('/', methods=['GET', 'POST'])
+@movement.route('/', methods=['POST'])
 def make_a_moose():
     userId = jwt.decode(request.headers['token'], JWT_SECRET)['user_id']
     user = db.session.query(Users).filter_by(id = userId)
 
-    # position = user['position'] - a user's position will have the same string literal as a room's title
+    current_room = db.session.query(Room).filter_by(title = user['current_room'])
 
 
-    if request.method == 'POST':
-        # Grab player record with player Id
+    command = None
+    try: # Error handling # 1 : Handles cases of failing to get the json attribute from request body
+            # ie. not sure what kind of error/ possibly server error
+        command = request.get_json()['direction']
+    except:
+        print('failed to get direction from post req')
+        return 'failed to get direction from post request'
+    if command: # Error handling # 2 : Handles cases of command not being present
+            # ie. client error, did not send proper request body
+        print(command)
+    else:
+        print('no command')
+        return 'command not set'
 
-        # Use it to determine current occupied room
-        # Determine direction player needs to move based on POST req
-        # Use current occupied room's direction attribute to determine which room player needs to be in to fulfil the movement req
-        # Send back info that FE needs to describe a new character state
-
-        command = None
-        try: # Error handling # 1 : Handles cases of failing to get the json attribute from request body
-                # ie. not sure what kind of error/ possibly server error
-            command = request.get_json()['direction']
-        except:
-            print('failed to get direction from post req')
-        
-        if command: # Error handling # 2 : Handles cases of command not being present
-                # ie. client error, did not send proper request body
-            print(command)
+    # Directional Interface
+    if command == 'n':
+        if current_room['north'] is None:
+            return 'ya done goofed, no room here'
         else:
-            print('no command')
+            moveTo = current_room['north']
+            user['current_room'] = moveTo
+            return user
 
-    return 'hi'
+    elif command == 'e':
+        if current_room['east'] is None:
+            return 'ya done goofed, no room here'
+        else:
+            moveTo = current_room['east']
+            user['current_room'] = moveTo
+            return user
+
+    elif command == 's':
+        if current_room['south'] is None:
+            return 'ya done goofed, no room here'
+        else:
+            moveTo = current_room['south']
+            user['current_room'] = moveTo
+            return user
+
+    elif command == 'w':
+        if current_room['west'] is None:
+            return 'ya done goofed, no room here'
+        else:
+            moveTo = current_room['west']
+            user['current_room'] = moveTo
+            return user

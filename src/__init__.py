@@ -16,7 +16,6 @@ db = SQLAlchemy()  # init orm for building tables/fields/constraints
 
 CORS_ORIGIN = os.environ.get("CORS_ORIGIN")
 
-
 def create_app():
     app = Flask(__name__)
     CORS(app, resources={r"/*": {"origins": CORS_ORIGIN}})
