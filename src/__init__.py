@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from flask_login import LoginManager
+from flask_cors import CORS
 
 from dotenv import load_dotenv
 
@@ -16,6 +17,7 @@ db = SQLAlchemy()  # init orm for building tables/fields/constraints
 
 def create_app():
     app = Flask(__name__)
+    CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
     dburl = os.environ.get("DATABASE_URL")
 
