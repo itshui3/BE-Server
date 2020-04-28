@@ -17,7 +17,8 @@ psycopg2 = "*"
 flask-migrate = "*"
 flask-script = "*"
 flask-login = "*"
-jwt = "*"
+pyjwt = "*"
+aiohttp = "*"
 
 [requires]
 python_version = "3.8.2"
