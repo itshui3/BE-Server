@@ -44,6 +44,8 @@ class Room(db.Model):
         self.east = east
         self.south = south
         self.west = west
+    def __str__(self):
+        return f'{self.title}, {self.description}, {self.items}, {self.NPCs}, {self.north}, {self.east}, {self.south}, {self.west}'
 
 class NPC(db.Model):
     id = db.Column(db.Integer, primary_key=True)

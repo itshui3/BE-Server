@@ -1,24 +1,33 @@
 from models import Room
 
-class A1(Room):
-    def __init__(self, title, description, items, NPCs, north, east, south, west):
-        super().__init__(title, description, items, NPCs, north, east, south, west)
+#declare rooms
+rooms = {
+    'a1': Room(
+        title='Room A1',
+        description='This is the beginning',
+        items=['item1'],
+        NPCs=['none'],
+        north=None,
+        east=None,
+        south=None,
+        west=None
+    ),
+    'a2': Room(
+        title='Room A2',
+        description='Another room',
+        items=['item1'],
+        NPCs=['none'],
+        north=None,
+        east=None,
+        south=None,
+        west=None
+    )
+}
 
-    def __str__(self):
-        return f'{self.title}, {self.description}'
+#link rooms together
+rooms['a1'].west = rooms['a2']
+rooms['a2'].east = rooms['a1']
 
-rooms = []
-
-rooms.append(A1(
-    title='Room A1',
-    description='This is the beginning',
-    items=['item1'],
-    NPCs=['none'],
-    north=None,
-    east=None,
-    south=None,
-    west=None
-
-))
-
-print(rooms)
+#test print next room
+print(rooms['a1'].west.title)
+print(rooms['a2'].east.title)
