@@ -16,6 +16,8 @@ gunicorn = "*"
 psycopg2 = "*"
 flask-migrate = "*"
 flask-script = "*"
+flask-login = "*"
+jwt = "*"
 
 [requires]
 python_version = "3.8.2"
