@@ -53,9 +53,27 @@ def register_request():
 
     # create new user with the form data. Hash the password so plaintext version isn't saved.
     if req["password1"] == req["password2"]:
+        # Character Instantiation
+        job = req["character_type"]
+        hp = 0
+        attack = 0
+        mp = 0
+
+        if job == 'Ninja':
+            hp = 20
+            attack = 8
+            mp = 5
+
         new_user = Users(
             username=req["username"],
             password=generate_password_hash(req["password1"], method="sha256"),
+            character_name=req["character_name"],
+            character_type=req["character_type"],
+            portrait=req["portrait"],
+            HP=hp,
+            MP=mp,
+            attack=attack
+
         )
 
         # add the new user to the database

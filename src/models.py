@@ -11,16 +11,16 @@ class Users(UserMixin, db.Model):
     portrait = db.Column(db.String(1024))
     HP = db.Column(db.Integer)
     MP = db.Column(db.Integer)
-    encounter_cd = db.Column(db.Integer)
-    #items
-    # current_room = db.Column(db.Integer)
-    gold = db.Column(db.Integer)
-    #move
     attack = db.Column(db.Integer)
+    gold = db.Column(db.Integer)
+    encounter_cd = db.Column(db.Integer)
+    current_room = db.Column(db.Integer)
+    #items
+    #move
     #use_item
     #examine
 
-    def __init__(self, username, password, character_name, character_type, portait, HP, MP, items, gold, move, attack, use_item, examine, encounter_cd, current_room="1_a1"):
+    def __init__(self, username, password, character_name, character_type, portait, HP, MP, attack, gold=500, encounter_cd=0, current_room="1_a1"):
         self.username = username
         self.password = password
         self.character_name = character_name
@@ -28,13 +28,13 @@ class Users(UserMixin, db.Model):
         self.portait = portait
         self.HP = HP
         self.MP = MP
-        self.items = items
         self.current_room = current_room
         self.gold = gold
-        self.move = move
         self.attack = attack
-        self.use_item = use_item
-        self.examine = examine
+        # self.items = items
+        # self.move = move
+        # self.use_item = use_item
+        # self.examine = examine
 
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
