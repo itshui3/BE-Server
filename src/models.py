@@ -40,9 +40,10 @@ class Room(db.Model):
     description = db.Column(db.String(1024))
     items = db.Column(db.String(1024))
     NPCs = db.Column(db.String(1024))
-    def __init__(self, title, description, items, NPCs, north, east, south, west):
+    def __init__(self, title, description, floor, items, NPCs, north, east, south, west):
         self.title = title
         self.description = description
+        self.floor = floor
         self.items = items
         self.NPCs = NPCs
         self.north = north
@@ -50,7 +51,7 @@ class Room(db.Model):
         self.south = south
         self.west = west
     def __str__(self):
-        return f'{self.title}, {self.description}, {self.items}, {self.NPCs}, {self.north}, {self.east}, {self.south}, {self.west}'
+        return f'{self.title}, {self.description}, {self.floor}, {self.items}, {self.NPCs}, {self.north}, {self.east}, {self.south}, {self.west}'
 
 class NPC(db.Model):
     id = db.Column(db.Integer, primary_key=True)
