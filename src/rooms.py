@@ -1,22 +1,22 @@
 from models import Room
 
-from dungeon import floor_a, floor_b, floor_c, floor_d
+from dungeon import floor_1, floor_2, floor_3, floor_4
 
 #declare rooms
 rooms = {}
 
 #add floors to rooms
-rooms.update(floor_a.make_floor(Room))
-rooms.update(floor_b.make_floor(Room))
-rooms.update(floor_c.make_floor(Room))
-rooms.update(floor_d.make_floor(Room))
+rooms = (floor_1.make_floor(Room))
+rooms.update(floor_2.make_floor(Room))
+rooms.update(floor_3.make_floor(Room))
+rooms.update(floor_4.make_floor(Room))
 
 #link rooms together
-rooms['a1'].east = rooms['a2'].title
-# rooms['a2'].west = rooms['a1']  <--- if user wants to back track to previous room or use connect_backtrack
-rooms['a2'].south = rooms['a3'].title
-rooms['a3'].east = rooms['a4'].title
-rooms['a4'].east = rooms['a5'].title
+rooms['1-a1'].east = rooms['1-a2'].title
+# rooms['1-a2'].west = rooms['1-a1']  <--- if user wants to back track to previous room or use connect_backtrack
+rooms['1-a2'].south = rooms['1-a3'].title
+rooms['1-a3'].east = rooms['1-a4'].title
+rooms['1-a4'].east = rooms['1-a5'].title
 
 def connect_backtrack(rooms):
     for key, current_room in rooms.items():
@@ -60,8 +60,9 @@ def print_connections(rooms):
 
 # print_connections(rooms)
 
-# print(rooms['a2'].east.title)
+# print(rooms)
 
-# test = floor_a.make_floor(Room)
-
-# print(test)
+# current = 0
+# for room in rooms.items():
+#     current += 1
+#     print(current, room)
