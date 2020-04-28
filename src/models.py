@@ -1,4 +1,4 @@
-from . import db
+from __init__ import db
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -92,10 +92,3 @@ class Item:
         self.price = price
         self.action = action
         self.resuseable = reusable
-
-class UserSchema(ma.Schema):
-    class Meta:
-        fields = ('id', 'username')
-
-user_schema = UserSchema()
-users_schema = UserSchema(many=True)
