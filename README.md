@@ -1,5 +1,7 @@
 # BE-Server
 
+Deploy: https://g-o-o-o.herokuapp.com/
+
 To edit migrations on heroku, run the commands: 
 python app.py db migrate
 python app.py db upgrade
