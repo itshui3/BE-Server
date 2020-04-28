@@ -13,7 +13,6 @@ import os
 
 db = SQLAlchemy()  # init orm for building tables/fields/constraints
 
-
 def create_app():
     app = Flask(__name__)
 
@@ -30,8 +29,8 @@ def create_app():
     db.init_app(app)
 
     # Route Registry
-    from .public import public
-    app.register_blueprint(public)
+    # from .public import public
+    # app.register_blueprint(public)
 
     # Auth Routes
     from .auth import auth
@@ -39,7 +38,7 @@ def create_app():
 
     playerPrefix = '/player'
     # player Routes
-    from .routes.movement import movement
+    from .movement import movement
     app.register_blueprint(movement, url_prefix=playerPrefix + '/movement')
 
     return app
