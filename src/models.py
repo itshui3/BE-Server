@@ -20,7 +20,7 @@ class Users(UserMixin, db.Model):
     #use_item
     #examine
 
-    def __init__(self, username, password, character_name, character_type, portait, HP, MP, items, current_room, gold, move, attack, use_item, examine, encounter_cd):
+    def __init__(self, username, password, character_name, character_type, portait, HP, MP, items, gold, move, attack, use_item, examine, encounter_cd, current_room="1_a1"):
         self.username = username
         self.password = password
         self.character_name = character_name

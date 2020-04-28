@@ -14,7 +14,6 @@ import os
 
 db = SQLAlchemy()  # init orm for building tables/fields/constraints
 
-
 CORS_ORIGIN = os.environ.get("CORS_ORIGIN")
 
 def create_app():
