@@ -4,6 +4,8 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True)
     #password = db.Column(). Hi jimmy
+    character_name = db.Column(db.String(100))
+    character_type = db.Column(db.String(100))
     portrait = db.Column(db.String(1024))
     HP = db.Column(db.Integer)
     MP = db.Column(db.Integer)
@@ -15,9 +17,11 @@ class User(db.Model):
     #use_item
     #examine
 
-    def __init__(self, username, password, portait, HP, MP, items, current_room, gold, move, attack, use_item, examine):
-        self.name = name
+    def __init__(self, username, password, character_name, character_type, portait, HP, MP, items, current_room, gold, move, attack, use_item, examine):
+        self.username = username
         self.password = password
+        self.character_name = character_name
+        self.character_type = character_type
         self.portait = portait
         self.HP = HP
         self.MP = MP
