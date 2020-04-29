@@ -45,24 +45,28 @@ def login():
 @auth.route("/registration/", methods=["POST"])
 def register_request():
     req = request.json
+    print('request\n\n', request.json, "\n\n")
+    return "a string"
     user = Users.query.filter_by(username=req["username"]).first()
+        #     if user:
+            return "Username address already exists"
+    # try:
+    #     user = db.session.query(Users).filter_by(username = req["username"])
 
-    # if a user is found, return an error
-    if user:
-        return "Username address already exists"
-
+    # # if a user is found, return an error
+    # except:
+    #     pass
     # create new user with the form data. Hash the password so plaintext version isn't saved.
+
+
     if req["password1"] == req["password2"]:
         # Character Instantiation
-        job = req["character_type"]
-        hp = 0
-        attack = 0
-        mp = 0
+        stats = {}
 
-        if job == 'Ninja':
-            hp = 20
-            attack = 8
-            mp = 5
+        if req["character_type"] == 'Ninja':
+            stats['hp'] = 20
+            stats['attack'] = 8
+            stats['mp'] = 5
 
         new_user = Users(
             username=req["username"],
@@ -70,9 +74,9 @@ def register_request():
             character_name=req["character_name"],
             character_type=req["character_type"],
             portrait=req["portrait"],
-            HP=hp,
-            MP=mp,
-            attack=attack
+            HP=stats['hp'],
+            MP=stats['attack'],
+            attack=stats['mp']
 
         )
 
