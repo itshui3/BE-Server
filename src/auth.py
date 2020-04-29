@@ -56,6 +56,13 @@ def register_request():
         new_user = Users(
             username=req["username"],
             password=generate_password_hash(req["password1"], method="sha256"),
+            character_name=req["character_name"],
+            character_type=req["character_type"],
+            portrait=req["portrait"],
+            HP=1000,
+            MP=1000,
+            gold=1000,
+            attack=1000,
         )
 
         # add the new user to the database

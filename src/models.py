@@ -2,8 +2,11 @@ from flask_login import UserMixin
 
 from . import db
 
+
 class Users(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)  # primary keys are required by SQLAlchemy
+    id = db.Column(
+        db.Integer, primary_key=True
+    )  # primary keys are required by SQLAlchemy
     username = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     character_name = db.Column(db.String(100))
@@ -12,29 +15,47 @@ class Users(UserMixin, db.Model):
     HP = db.Column(db.Integer)
     MP = db.Column(db.Integer)
     encounter_cd = db.Column(db.Integer)
-    #items
+    # items
     # current_room = db.Column(db.Integer)
     gold = db.Column(db.Integer)
-    #move
+    # move
     attack = db.Column(db.Integer)
-    #use_item
-    #examine
+    # use_item
+    # examine
 
-    def __init__(self, username, password, character_name, character_type, portait, HP, MP, items, gold, move, attack, use_item, examine, encounter_cd, current_room="1_a1"):
+    def __init__(
+        self,
+        username,
+        password,
+        character_name,
+        character_type,
+        portrait,
+        HP,
+        MP,
+        # items,
+        gold,
+        # move,
+        attack,
+        # use_item,
+        # examine,
+        # encounter_cd,
+        # current_room="1_a1",
+    ):
         self.username = username
         self.password = password
         self.character_name = character_name
         self.character_type = character_type
-        self.portait = portait
+        self.portrait = portrait
         self.HP = HP
         self.MP = MP
-        self.items = items
-        self.current_room = current_room
+        # self.items = items
+        # self.current_room = current_room
         self.gold = gold
-        self.move = move
+        # self.move = move
         self.attack = attack
-        self.use_item = use_item
-        self.examine = examine
+        # self.use_item = use_item
+        # self.examine = examine
+
 
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -42,7 +63,10 @@ class Room(db.Model):
     description = db.Column(db.String(1024))
     items = db.Column(db.String(1024))
     NPCs = db.Column(db.String(1024))
-    def __init__(self, title, description, floor, items, NPCs, north, east, south, west):
+
+    def __init__(
+        self, title, description, floor, items, NPCs, north, east, south, west
+    ):
         self.title = title
         self.description = description
         self.floor = floor
@@ -52,8 +76,10 @@ class Room(db.Model):
         self.east = east
         self.south = south
         self.west = west
+
     def __str__(self):
-        return f'{self.title}, {self.description}, {self.floor}, {self.items}, {self.NPCs}, {self.north}, {self.east}, {self.south}, {self.west}'
+        return f"{self.title}, {self.description}, {self.floor}, {self.items}, {self.NPCs}, {self.north}, {self.east}, {self.south}, {self.west}"
+
 
 class NPC(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -75,18 +101,20 @@ class NPC(db.Model):
         self.isHostile = isHostile
         self.attack = attack
 
+
 class Merchant(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=True)
-    #view inventory
-    #buy from
-    #sell to
+    # view inventory
+    # buy from
+    # sell to
 
     def __init__(self, name, view_inventory, buy_from, sell_to):
         self.name = name
         self.view_inventory = view_inventory
         self.buy_from = buy_from
         self.sell_to = sell_to
+
 
 class Item:
     id = db.Column(db.Integer, primary_key=True)
