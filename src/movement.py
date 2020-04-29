@@ -13,7 +13,7 @@ def make_a_movement():
     command = None
     command = request.get_json()["direction"]
 
-    # current_room = db.session.query(Room).filter_by(title = user['current_room'])
+    current_room = db.session.query(Room).filter_by(title = user['current_room'])
     rooms = db.session.query(Room).all()
 
     print('\n\n', rooms, '\n\n')
