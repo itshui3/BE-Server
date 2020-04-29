@@ -13,16 +13,11 @@ rooms.update(floor_2.make_floor(Room))
 rooms.update(floor_3.make_floor(Room))
 rooms.update(floor_4.make_floor(Room))
 
-#link rooms together
-rooms['1-a1'].east = rooms['1-a2'].title
-rooms['1-a2'].east = rooms['1-a3'].title
-rooms['1-a2'].south = rooms['1-b2'].title
-rooms['1-a3'].east = rooms['1-a4'].title
-rooms['1-a4'].east = rooms['1-a5'].title
-rooms['1-a5'].south = rooms['1-b5'].title
+#link rooms together from left to right in "forward" direction  --   rooms['1-'].east = rooms['1-'].title
+floor_1.link_rooms(rooms)
 
 #add items to rooms
-rooms['1-a1'].items = {(items['sword']), items['green_potion']}
+rooms['1-a2'].items = {(items['sword'])}
 
 # print(rooms['1-a1'].items)
 # print(f"Item here {items['sword']}")
@@ -67,7 +62,7 @@ def print_connections(rooms):
         if room.west:
             print(f"Room: {room.title} Connects to: {room.west} At: west")
 
-# print_connections(rooms)
+print_connections(rooms)
 
 # print(rooms)
 
