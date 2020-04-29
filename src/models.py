@@ -93,7 +93,7 @@ class Merchant(db.Model):
     #buy from
     #sell to
 
-    def __init__(self, name, inventory, gold, hp, attack, view_inventory, buy_from, sell_to):
+    def __init__(self, name, inventory, gold, HP, attack, view_inventory, buy_from, sell_to):
         self.name = name
         self.inventory = inventory
         self.gold = gold

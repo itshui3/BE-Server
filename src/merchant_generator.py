@@ -1,13 +1,15 @@
 from .models import Merchant
 from .items import items
 
-merchant_1 = Merchant(
-    name = 'Merchant 1',
-    inventory = {'leg_armor':items['leg_armor']},
+merchant = Merchant(
+    name = 'Merchant',
+    inventory = {'leg_armor':items['leg_armor'], 'helmet':items['helmet'], 'green_potion':items['green_potion'], 'blue_potion':items['blue_potion']},
     gold = 1000,
-    hp = 1000,
+    HP = 1000,
     attack = 1000,
     view_inventory = "",
     buy_from = "",
     sell_to = ""
 )
+
+# print(merchant.inventory)
