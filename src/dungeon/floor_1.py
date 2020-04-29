@@ -47,6 +47,7 @@ def make_floor(Room):
 }
 
 def link_rooms(rooms):
+    # from left to right in "forward" direction  --   rooms['1-'].east = rooms['1-'].title
     rooms['1-a1'].east = rooms['1-a2'].title
     rooms['1-a2'].east = rooms['1-a3'].title
     rooms['1-a2'].south = rooms['1-b2'].title

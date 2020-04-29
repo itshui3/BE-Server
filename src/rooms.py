@@ -13,8 +13,9 @@ rooms.update(floor_2.make_floor(Room))
 rooms.update(floor_3.make_floor(Room))
 rooms.update(floor_4.make_floor(Room))
 
-#link rooms together from left to right in "forward" direction  --   rooms['1-'].east = rooms['1-'].title
+#link rooms together
 floor_1.link_rooms(rooms)
+floor_2.link_rooms(rooms)
 
 #add items to rooms
 rooms['1-a2'].items = {(items['sword'])}
