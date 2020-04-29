@@ -17,16 +17,16 @@ def make_a_movement():
     rooms = db.session.query(Room).all()
 
     print('\n\n', rooms, '\n\n')
-    # try:
-    #     command = request.get_json()['direction']
-    # except:
-    #     print('failed to get direction from post req')
-    #     return 'failed to get direction from post request'
-    # if command:
-    #     print(command)
-    # else:
-    #     print('no command')
-    #     return 'command not set'
+    try:
+        command = request.get_json()['direction']
+    except:
+        print('failed to get direction from post req')
+        return 'failed to get direction from post request'
+    if command:
+        print(command)
+    else:
+        print('no command')
+        return 'command not set'
 
     # Directional Interface
     if command == 'n':
@@ -35,6 +35,15 @@ def make_a_movement():
         else:
             moveTo = current_room['north']
             user['current_room'] = moveTo
+
+            controls = {
+                user: user,
+                room: user['current_room'],
+                #inventory ? inventory : null
+                #npc ? npc : null
+                #mob ? mob : null
+            }
+
             return 'kay'
 
     elif command == 'e':
