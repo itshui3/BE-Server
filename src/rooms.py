@@ -16,6 +16,7 @@ rooms.update(floor_4.make_floor(Room))
 #link rooms together
 floor_1.link_rooms(rooms)
 floor_2.link_rooms(rooms)
+floor_3.link_rooms(rooms)
 
 #add items to rooms
 rooms['1-a2'].items = {(items['sword'])}
