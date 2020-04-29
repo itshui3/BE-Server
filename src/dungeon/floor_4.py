@@ -40,8 +40,39 @@ def make_floor(Room):
 
     '4-e1': make_room(Room, '4-e1', 'Its a e room', 'Floor 4'),
     '4-e2': make_room(Room, '4-e2', 'Its a e room', 'Floor 4'),
-    '4-e3': make_room(Room, '4-e3', 'Its a e room', 'Floor 4'),
+    '4-e3': make_room(Room, '4-e3', 'The final battle', 'Floor 4'),
     '4-e4': make_room(Room, '4-e4', 'Its a e room', 'Floor 4'),
     '4-e5': make_room(Room, '4-e5', 'Its a e room', 'Floor 4'),
 
 }
+
+def link_rooms(rooms):
+    # from left to right then top to bottom direction  --   rooms['4-'].east = rooms['4-'].title
+    rooms['4-a1'].east = rooms['4-a2'].title
+    rooms['4-a1'].south = rooms['4-b1'].title
+    rooms['4-a2'].east = rooms['4-a3'].title
+    rooms['4-a3'].east = rooms['4-a4'].title
+    rooms['4-a4'].east = rooms['4-a5'].title
+    rooms['4-a5'].south = rooms['4-b5'].title
+
+    rooms['4-b2'].east = rooms['4-b3'].title
+    rooms['4-b2'].south = rooms['4-c2'].title
+    rooms['4-b3'].east = rooms['4-b4'].title
+    rooms['4-b3'].south = rooms['4-c3'].title
+    rooms['4-b4'].east = rooms['4-b5'].title
+
+    rooms['4-c1'].east = rooms['4-c2'].title
+    rooms['4-c1'].south = rooms['4-d1'].title
+    rooms['4-c3'].south = rooms['4-d3'].title
+    rooms['4-c4'].east = rooms['4-c5'].title
+    rooms['4-c5'].south = rooms['4-d5'].title
+
+    rooms['4-d1'].east = rooms['4-d2'].title
+    rooms['4-d1'].south = rooms['4-e1'].title
+    rooms['4-d2'].south = rooms['4-e2'].title
+    rooms['4-d3'].east = rooms['4-d4'].title
+    rooms['4-d4'].south = rooms['4-e4'].title
+    rooms['4-d5'].south = rooms['4-e5'].title
+
+    rooms['4-e2'].east = rooms['4-e3'].title
+    rooms['4-e4'].east = rooms['4-e5'].title
