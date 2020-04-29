@@ -67,18 +67,18 @@ def print_connections(rooms):
 # print_connections(rooms)
 
 #add items to rooms
-rooms['1-a2'].items = {'sword_truth':(items['sword_truth'])}
-rooms['1-b5'].items = {'green_potion':(items['green_potion'])}
-rooms['1-e1'].items = {'helmet':(items['helmet'])}
+rooms['1-a2'].items = 'sword_truth-1 green_potion-1'
+rooms['1-b5'].items = 'green_potion'
+rooms['1-e1'].items = 'helmet'
 
-rooms['2-b4'].items = {'red_potion':(items['red_potion'])}
-rooms['2-c5'].items = {'sword_magic':(items['sword_magic'])}
+rooms['2-b4'].items = 'red_potion'
+rooms['2-c5'].items = 'sword_magic'
 
-rooms['3-a4'].items = {'white_potion':(items['white_potion'])}
-rooms['3-b2'].items = {'chest_armor':(items['chest_armor'])}
+rooms['3-a4'].items = 'white_potion'
+rooms['3-b2'].items = 'chest_armor'
 
-rooms['4-c4'].items = {'blue_potion':(items['blue_potion'])}
-rooms['4-b1'].items = {'sword_destiny':(items['sword_destiny'])}
+rooms['4-c4'].items = 'blue_potion'
+rooms['4-b1'].items = 'sword_destiny'
 
 #This function prints all items in rooms to check they exist
 def print_all_items(rooms):
@@ -90,10 +90,10 @@ def print_all_items(rooms):
 # print_all_items(rooms)
 
 #add NPCs and Merchants to rooms:
-rooms['1-e3'].NPCs = {'merchant':merchant}
-rooms['2-c3'].NPCs = {'merchant':merchant}
-rooms['3-e3'].NPCs = {'merchant':merchant}
-rooms['4-e1'].NPCs = {'merchant':merchant}
+rooms['1-e3'].NPCs = 'merchant'
+rooms['2-c3'].NPCs = 'merchant'
+rooms['3-e3'].NPCs = 'merchant'
+rooms['4-e1'].NPCs = 'merchant'
 
 def print_all_NPCs(rooms):
     for key, room in rooms.items():
@@ -110,6 +110,7 @@ app.app_context().push()
 def commit_rooms(rooms):
     with app.app_context():
         for key, room in rooms.items():
+
             db.session.add(room)
         db.session.commit()
 
