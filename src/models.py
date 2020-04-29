@@ -101,11 +101,17 @@ class Item:
     description = db.Column(db.String(1024))
     price = db.Column(db.Integer)
     action = db.Column(db.String(1024))
+    damage = db.Column(db.Integer)
+    heal = db.Column(db.Integer)
+    armor = db.Column(db.Integer)
     resuseable = db.Column(db.Boolean)
 
-    def __init__(self, title, description, price, action, reusable):
+    def __init__(self, title, description, price, action, damage, heal, armor, reusable):
         self.title = title
         self.description = description
         self.price = price
         self.action = action
+        self.damage = damage
+        self.heal = heal
+        self.armor = armor
         self.resuseable = reusable
