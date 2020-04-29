@@ -45,3 +45,37 @@ def make_floor(Room):
     '1-e5': make_room(Room, '1-e5', 'Its a e room', 'Floor 1'),
 
 }
+
+def link_rooms(rooms):
+    # from left to right in "forward" direction  --   rooms['1-'].east = rooms['1-'].title
+    rooms['1-a1'].east = rooms['1-a2'].title
+    rooms['1-a2'].east = rooms['1-a3'].title
+    rooms['1-a2'].south = rooms['1-b2'].title
+    rooms['1-a3'].east = rooms['1-a4'].title
+    rooms['1-a4'].east = rooms['1-a5'].title
+    rooms['1-a5'].south = rooms['1-b5'].title
+
+    rooms['1-b1'].east = rooms['1-b2'].title
+    rooms['1-b1'].south = rooms['1-c1'].title
+    # rooms['1-b2'].west = rooms['1-b1'].title #(Will be added in back track function)
+    rooms['1-b3'].east = rooms['1-b4'].title
+    rooms['1-b4'].south = rooms['1-c4'].title
+    # rooms['1-b5'].north = rooms['1-a5'].title #(Will be added in back track function)
+
+    rooms['1-c1'].east = rooms['1-c2'].title
+    rooms['1-c2'].east = rooms['1-c3'].title
+    rooms['1-c3'].north = rooms['1-b3'].title
+    rooms['1-c4'].east = rooms['1-c5'].title
+    rooms['1-c5'].south = rooms['1-d5'].title
+
+    rooms['1-d1'].east = rooms['1-d2'].title
+    rooms['1-d1'].south = rooms['1-e1'].title
+    rooms['1-d2'].east = rooms['1-d3'].title
+    rooms['1-d2'].south = rooms['1-e2'].title
+    rooms['1-d3'].east = rooms['1-d4'].title
+    rooms['1-d4'].east = rooms['1-d5'].title
+    rooms['1-d4'].south = rooms['1-e4'].title
+
+    rooms['1-e2'].east = rooms['1-e3'].title
+    rooms['1-e4'].east = rooms['1-e5'].title
+    rooms['1-e5'].east = rooms['2-e1'].title
