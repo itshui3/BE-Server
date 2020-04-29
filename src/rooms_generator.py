@@ -4,6 +4,8 @@ from .dungeon import floor_1, floor_2, floor_3, floor_4
 
 from .items import items
 
+from .merchant_generator import merchant
+
 #declare rooms
 rooms = {}
 
@@ -84,5 +86,19 @@ def print_all_items(rooms):
                 print(f'Room: {room.title} contains: {item.title}')
 
 # print_all_items(rooms)
+
+#add NPCs and Merchants to rooms:
+rooms['1-e3'].NPCs = {'merchant':merchant}
+rooms['2-c3'].NPCs = {'merchant':merchant}
+rooms['3-e3'].NPCs = {'merchant':merchant}
+rooms['4-e1'].NPCs = {'merchant':merchant}
+
+def print_all_NPCs(rooms):
+    for key, room in rooms.items():
+        if room.NPCs:
+            for keyi, NPC in room.NPCs.items():
+                print(f'Room: {room.title} contains: {NPC.name}')
+
+# print_all_NPCs(rooms)
 
 # print(rooms)
