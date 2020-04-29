@@ -1,8 +1,8 @@
 from flask import Blueprint, request
 import jwt
 import os
-from __init__ import db
-from models import Item, Users, Room
+from . import db
+from .models import Item, Users, Room
 
 #define items
 items = {

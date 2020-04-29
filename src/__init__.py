@@ -45,7 +45,7 @@ def create_app():
     from .movement import movement
     app.register_blueprint(movement, url_prefix=playerPrefix + '/movement')
 
-    from .items import items
-    app.register_blueprint(items, url_prefix=playerPrefix + '/items')
+    from .items import items_blueprint
+    app.register_blueprint(items_blueprint, url_prefix=playerPrefix + '/items')
 
     return app
