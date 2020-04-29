@@ -12,9 +12,20 @@ load_dotenv()
 
 import os
 
+import pusher
+
+PUSHER_ID = os.environ.get("PUSHER_ID")
+PUSHER_KEY = os.environ.get("PUSHER_KEY")
+PUSHER_SECRET = os.environ.get("PUSHER_SECRET")
+
+pusher_client = pusher.Pusher(
+    app_id=PUSHER_ID, key=PUSHER_KEY, secret=PUSHER_SECRET, cluster="us2", ssl=True
+)
+
 db = SQLAlchemy()  # init orm for building tables/fields/constraints
 
 CORS_ORIGIN = os.environ.get("CORS_ORIGIN")
+
 
 def create_app():
     app = Flask(__name__)
@@ -38,14 +49,17 @@ def create_app():
 
     # Auth Routes
     from .auth import auth
+
     app.register_blueprint(auth)
 
-    playerPrefix = '/player'
+    playerPrefix = "/player"
     # player Routes
     from .movement import movement
-    app.register_blueprint(movement, url_prefix=playerPrefix + '/movement')
+
+    app.register_blueprint(movement, url_prefix=playerPrefix + "/movement")
 
     from .items import items_blueprint
-    app.register_blueprint(items_blueprint, url_prefix=playerPrefix + '/items')
+
+    app.register_blueprint(items_blueprint, url_prefix=playerPrefix + "/items")
 
     return app
