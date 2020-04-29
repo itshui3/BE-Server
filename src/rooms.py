@@ -19,12 +19,6 @@ floor_2.link_rooms(rooms)
 floor_3.link_rooms(rooms)
 floor_4.link_rooms(rooms)
 
-#add items to rooms
-rooms['1-a2'].items = {(items['sword'])}
-
-# print(rooms['1-a1'].items)
-# print(f"Item here {items['sword']}")
-
 #This function checks all the rooms to ensure they are connected to the previous room
 def connect_backtrack(rooms):
     for key, current_room in rooms.items():
@@ -67,5 +61,28 @@ def print_connections(rooms):
             print(f"Room: {room.title} Connects to: {room.west} At: west")
 
 # print_connections(rooms)
+
+#add items to rooms
+rooms['1-a2'].items = {'sword_truth':(items['sword_truth'])}
+rooms['1-b5'].items = {'green_potion':(items['green_potion'])}
+rooms['1-e1'].items = {'helmet':(items['helmet'])}
+
+rooms['2-b4'].items = {'red_potion':(items['red_potion'])}
+rooms['2-c5'].items = {'sword_magic':(items['sword_magic'])}
+
+rooms['3-a4'].items = {'white_potion':(items['white_potion'])}
+rooms['3-b2'].items = {'chest_armor':(items['chest_armor'])}
+
+rooms['4-c4'].items = {'blue_potion':(items['blue_potion'])}
+rooms['4-b1'].items = {'sword_destiny':(items['sword_destiny'])}
+
+#This function prints all items in rooms to check they exist
+def print_all_items(rooms):
+    for key, room in rooms.items():
+        if room.items:
+            for keyi, item in room.items.items():
+                print(f'Room: {room.title} contains: {item.title}')
+
+# print_all_items(rooms)
 
 # print(rooms)
