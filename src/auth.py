@@ -62,9 +62,29 @@ def register_request():
         # Character Instantiation
         stats = {}
 
-        if req["character_type"] == 'Ninja':
-            stats['hp'] = 20
-            stats['attack'] = 8
+        if req["character_type"] == 'ninja':
+            stats['hp'] = 25
+            stats['attack'] = 15
+            stats['mp'] = 5
+        
+        if req["character_type"] == 'warrior':
+            stats['hp'] = 45
+            stats['attack'] = 6
+            stats['mp'] = 5
+
+        if req["character_type"] == 'mage':
+            stats['hp'] = 15
+            stats['attack'] = 20
+            stats['mp'] = 60
+
+        if req["character_type"] == 'hunter':
+            stats['hp'] = 25
+            stats['attack'] = 12
+            stats['mp'] = 5
+
+        if req["character_type"] == 'thief':
+            stats['hp'] = 25
+            stats['attack'] = 15
             stats['mp'] = 5
 
         new_user = Users(
