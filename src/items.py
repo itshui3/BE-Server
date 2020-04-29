@@ -1,4 +1,8 @@
-from models import Item
+from flask import Blueprint, request
+import jwt
+import os
+from __init__ import db
+from models import Item, Users, Room
 
 #define items
 items = {
@@ -117,4 +121,13 @@ items = {
 )
 }
 
-print(items)
+# print(items)
+
+
+items = Blueprint('items', __name__)
+JWT_SECRET = os.environ.get("SECRET")
+
+@items.route('/', methods=['POST'])
+def the_stuff():
+    userId = jwt.decode(request.headers['token'], JWT_SECRET)['user_id']
+    user = db.session.query(Users).filter_by(id = userId)

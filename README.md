@@ -8,3 +8,5 @@ python app.py db upgrade
 
 If you receive a message saying that something is not up to date, you may have to run: 
 python app.py db stamp head
+
+If other issues occur with migrations, try deleting database first and re-running commands. 
