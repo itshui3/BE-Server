@@ -1,1 +1,0 @@
-# User moves into a room, there is no room. 
