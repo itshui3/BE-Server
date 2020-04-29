@@ -85,12 +85,14 @@ class NPC(db.Model):
 class Merchant(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=True)
+    inventory = db.Column(db.String(1024))
     #view inventory
     #buy from
     #sell to
 
-    def __init__(self, name, view_inventory, buy_from, sell_to):
+    def __init__(self, name, inventory, view_inventory, buy_from, sell_to):
         self.name = name
+        self.inventory = inventory
         self.view_inventory = view_inventory
         self.buy_from = buy_from
         self.sell_to = sell_to
