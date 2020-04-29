@@ -45,11 +45,10 @@ def login():
 @auth.route("/registration/", methods=["POST"])
 def register_request():
     req = request.json
-    print('request\n\n', request.json, "\n\n")
-    return "a string"
     user = Users.query.filter_by(username=req["username"]).first()
-        #     if user:
-            return "Username address already exists"
+
+    if user:
+        return "Username address already exists"
     # try:
     #     user = db.session.query(Users).filter_by(username = req["username"])
 

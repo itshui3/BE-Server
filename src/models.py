@@ -41,8 +41,14 @@ class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(20), unique=True)
     description = db.Column(db.String(1024))
+    floor = db.Column(db.String(20))
     items = db.Column(db.String(1024))
     NPCs = db.Column(db.String(1024))
+    north = db.Column(db.String(20))
+    east = db.Column(db.String(20))
+    south = db.Column(db.String(20))
+    west = db.Column(db.String(20))
+
     def __init__(self, title, description, floor, items, NPCs, north, east, south, west):
         self.title = title
         self.description = description
