@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: c170afed8614
-Revises: 3dbf1dfbc2d6
-Create Date: 2020-04-28 19:42:59.614650
+Revision ID: 6df990f4bce9
+Revises: 6b87a8e05d38
+Create Date: 2020-04-29 12:25:45.345868
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c170afed8614'
-down_revision = '3dbf1dfbc2d6'
+revision = '6df990f4bce9'
+down_revision = '6b87a8e05d38'
 branch_labels = None
 depends_on = None
 
@@ -40,8 +40,13 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=20), nullable=True),
     sa.Column('description', sa.String(length=1024), nullable=True),
+    sa.Column('floor', sa.String(length=20), nullable=True),
     sa.Column('items', sa.String(length=1024), nullable=True),
     sa.Column('NPCs', sa.String(length=1024), nullable=True),
+    sa.Column('north', sa.String(length=20), nullable=True),
+    sa.Column('east', sa.String(length=20), nullable=True),
+    sa.Column('south', sa.String(length=20), nullable=True),
+    sa.Column('west', sa.String(length=20), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('title')
     )

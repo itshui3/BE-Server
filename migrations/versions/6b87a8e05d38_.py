@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 5ce9a277b3ef
-Revises: 
-Create Date: 2020-04-28 18:27:57.175850
+Revision ID: 6b87a8e05d38
+Revises: e8ce360f879d
+Create Date: 2020-04-29 12:25:07.969037
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '5ce9a277b3ef'
-down_revision = None
+revision = '6b87a8e05d38'
+down_revision = 'e8ce360f879d'
 branch_labels = None
 depends_on = None
 
@@ -40,8 +40,13 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=20), nullable=True),
     sa.Column('description', sa.String(length=1024), nullable=True),
+    sa.Column('floor', sa.String(length=20), nullable=True),
     sa.Column('items', sa.String(length=1024), nullable=True),
     sa.Column('NPCs', sa.String(length=1024), nullable=True),
+    sa.Column('north', sa.String(length=20), nullable=True),
+    sa.Column('east', sa.String(length=20), nullable=True),
+    sa.Column('south', sa.String(length=20), nullable=True),
+    sa.Column('west', sa.String(length=20), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('title')
     )
@@ -57,7 +62,7 @@ def upgrade():
     sa.Column('attack', sa.Integer(), nullable=True),
     sa.Column('gold', sa.Integer(), nullable=True),
     sa.Column('encounter_cd', sa.Integer(), nullable=True),
-    sa.Column('current_room', sa.Integer(), nullable=True),
+    sa.Column('current_room', sa.String(length=20), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('username')
     )
