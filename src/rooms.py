@@ -1,8 +1,8 @@
-from models import Room
+from .models import Room
 
-from dungeon import floor_1, floor_2, floor_3, floor_4
+from .dungeon import floor_1, floor_2, floor_3, floor_4
 
-from items import items
+from .items import items
 
 #declare rooms
 rooms = {}
