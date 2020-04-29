@@ -44,7 +44,7 @@ def make_a_movement():
                 #mob ? mob : null
             }
 
-            return 'kay'
+            return controls
 
     elif command == 'e':
         if current_room['east'] is None:
@@ -52,7 +52,16 @@ def make_a_movement():
         else:
             moveTo = current_room['east']
             user['current_room'] = moveTo
-            return 'kay'
+            
+            controls = {
+                user: user,
+                room: user['current_room'],
+                #inventory ? inventory : null
+                #npc ? npc : null
+                #mob ? mob : null
+            }
+
+            return controls
 
     elif command == 's':
         if current_room['south'] is None:
@@ -60,7 +69,16 @@ def make_a_movement():
         else:
             moveTo = current_room['south']
             user['current_room'] = moveTo
-            return 'kay'
+            
+            controls = {
+                user: user,
+                room: user['current_room'],
+                #inventory ? inventory : null
+                #npc ? npc : null
+                #mob ? mob : null
+            }
+
+            return controls
 
     elif command == 'w':
         if current_room['west'] is None:
@@ -68,4 +86,13 @@ def make_a_movement():
         else:
             moveTo = current_room['west']
             user['current_room'] = moveTo
-            return 'kay'
+            
+            controls = {
+                user: user,
+                room: user['current_room'],
+                #inventory ? inventory : null
+                #npc ? npc : null
+                #mob ? mob : null
+            }
+
+            return controls
