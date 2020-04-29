@@ -2,6 +2,8 @@ from models import Room
 
 from dungeon import floor_1, floor_2, floor_3, floor_4
 
+from items import items
+
 #declare rooms
 rooms = {}
 
@@ -13,10 +15,17 @@ rooms.update(floor_4.make_floor(Room))
 
 #link rooms together
 rooms['1-a1'].east = rooms['1-a2'].title
-# rooms['1-a2'].west = rooms['1-a1']  <--- if user wants to back track to previous room or use connect_backtrack
-rooms['1-a2'].south = rooms['1-a3'].title
+rooms['1-a2'].east = rooms['1-a3'].title
+rooms['1-a2'].south = rooms['1-b2'].title
 rooms['1-a3'].east = rooms['1-a4'].title
 rooms['1-a4'].east = rooms['1-a5'].title
+rooms['1-a5'].south = rooms['1-b5'].title
+
+#add items to rooms
+rooms['1-a1'].items = {(items['sword']), items['green_potion']}
+
+# print(rooms['1-a1'].items)
+# print(f"Item here {items['sword']}")
 
 def connect_backtrack(rooms):
     for key, current_room in rooms.items():
