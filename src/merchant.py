@@ -22,7 +22,7 @@ def make_a_merchant():
     inventory = parse_inventory(merchant.inventory)
 
     print(f'\nmerchant inventory: {inventory}')
-
+    # need to map item price and description to inventory
     # for item in items:
     #     for key, value in inventory.items():
     #         if key == item.name:
@@ -46,14 +46,27 @@ def make_a_merchant():
                 for item in items:
                     if buy_item == item.name:
                         price = item.price
-                print(f'Price: {price}')
+                # print(f'Price: {price}')
                 inventory[buy_item] -= 1
                 newInv = unparse_inventory(inventory)
                 merchant.inventory = str(newInv)
                 user.gold = user.gold - price
-                print(f'Gold: {user.gold}')
+                # print(f'Gold: {user.gold}')
+                # print(user.items)
+                userItems = {}
+                if user.items: #check if user has items
+                    userItems = parse_inventory(user.items) #parse user items into dict
+                    if buy_item in userItems: #check if item is already in user items
+                        userItems[buy_item] += 1
+                    else: #if user doesn't already have item, add
+                        userItems.update({buy_item: 1})
+                    user.items = unparse_inventory(userItems) #unparse user items into string
+                else: #if user doesn't have items, create item&qty
+                    userItems = {buy_item: 1}
+                    user.items = f'{buy_item}-1'
                 db.session.commit()
-                return inventory
+                userItems.update({"gold": user.gold})
+                return userItems
         else:
             return 'Item is not in inventory'
 
