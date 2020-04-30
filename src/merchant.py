@@ -18,13 +18,17 @@ def make_a_merchant():
     command = request.get_json()["command"]
     buy_item = request.get_json()["buy_item"]
 
-    print(f'Db merchant inventory {merchant.inventory}')
-
+    # print(f'Db merchant inventory {merchant.inventory}')
     inventory = parse_inventory(merchant.inventory)
 
     print(f'\nmerchant inventory: {inventory}')
 
-    print(f'\nitems: {items}')
+    # for item in items:
+    #     for key, value in inventory.items():
+    #         if key == item.name:
+    #             print(key, item.price)
+
+    # print(f'\nitems: {items}')
     if command == 'peruse':
 
         return inventory
@@ -38,11 +42,17 @@ def make_a_merchant():
             if inventory[buy_item] < 1:
                 return "Item is out of stock"
             else:
-                print(items[buy_item].price)
+                price = 0
+                for item in items:
+                    if buy_item == item.name:
+                        price = item.price
+                print(f'Price: {price}')
                 inventory[buy_item] -= 1
                 newInv = unparse_inventory(inventory)
                 merchant.inventory = str(newInv)
-                # db.session.commit()
+                user.gold = user.gold - price
+                print(f'Gold: {user.gold}')
+                db.session.commit()
                 return inventory
         else:
             return 'Item is not in inventory'
