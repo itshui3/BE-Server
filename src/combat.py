@@ -15,9 +15,11 @@ def execute_combat_command():
     command = request.get_json()["command"]
 
     current_room = db.session.query(Room).filter_by(title = user.current_room).first()
+    print('\n\n', current_room.NPCs, '\n\n')
 
-    if current_room.NPCs is None:
+    if current_room.NPCs == '':
         return 'nothing to fite here, so fite me irl'
+        
     else:
         current_enemy = db.session.query(Npc).filter_by(name = current_room.NPCs).first()
 
