@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 import jwt
 import os
 from . import db
-from .models import Users
+from .models import Users, Room
 
 startgame = Blueprint('startgame', __name__)
 JWT_SECRET = os.environ.get("SECRET")
