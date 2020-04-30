@@ -13,6 +13,7 @@ def make_a_merchant():
     command = None
     command = request.get_json()["direction"]
 
+
     print(f'user herrrrrrrre:{user.username}')
 
-    return (user.username)
+    return (user.current_room)
