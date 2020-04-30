@@ -28,6 +28,7 @@ def map_inventory(items, inventory):
                 inventory_details.append(
                     {
                         f'{item.name}':{
+                            "name":item.name,
                             "quantity":value,
                             "title": item.title,
                             "description": item.description,

@@ -16,8 +16,6 @@ def make_a_merchant():
     items = db.session.query(Item).all()
     command = None
     command = request.get_json()["command"]
-    buy_item = request.get_json()["buy_item"]
-
 
     inventory = parse_inventory(merchant.inventory)
     inventory_details = map_inventory(items, inventory)
@@ -30,7 +28,7 @@ def make_a_merchant():
         return jsonify(inventory_details)
 
     elif command == 'buy':
-
+        buy_item = request.get_json()["buy_item"]
         if buy_item is None:
             return 'buy_item is not specified'
 
@@ -63,7 +61,7 @@ def make_a_merchant():
                 else: #if user doesn't have items, create item&qty
                     userItems = {buy_item: 1}
                     user.items = f'{buy_item}-1'
-                    
+
                 db.session.commit()
                 userItems.update({"gold": user.gold})
                 return userItems
