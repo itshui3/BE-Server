@@ -4,10 +4,6 @@ from .models import Room
 
 from .dungeon import floor_1, floor_2, floor_3, floor_4
 
-from .items_generator import items
-
-from .merchant_generator import merchant
-
 #declare rooms
 rooms = {}
 
