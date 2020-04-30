@@ -21,7 +21,7 @@ def the_stuff():
 
     room_inv = {}
     if room.items is None: #check if there are items in room
-        return 'There are no items in the room'
+        return jsonify({"error":'There are no items in the room'})
     else:
         room_inv = parse_inventory(room.items)
     
@@ -38,18 +38,15 @@ def the_stuff():
                 room_inv[item] -= 1
                 room.items = unparse_inventory(room_inv)
                 userItems.update(room_inv[item])
-                print(userItems)
             else:
                 new_item = {item: 1}
                 userItems.update(new_item)
-                print(userItems)
-                # user.items = f'{buy_item}-1'
+                user.items = unparse_inventory(userItems)
                 del room_inv[item]
                 room.items = unparse_inventory(room_inv)
-                # userItems.update(room_inv[item])
                 
-            # db.session.commit()
-            return f'Item found {room_inv}'
+            db.session.commit()
+            return userItems
         else:
             return jsonify({"error": "Item not found in room"})
     else:
