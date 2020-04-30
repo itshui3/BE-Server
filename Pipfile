@@ -20,7 +20,6 @@ flask-login = "*"
 pyjwt = "*"
 aiohttp = "*"
 flask-cors = "*"
-jwt = "*"
 
 [requires]
 python_version = "3.8.2"
