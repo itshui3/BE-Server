@@ -40,3 +40,15 @@ def map_inventory(items, inventory):
                         }
                     })
     return inventory_details
+
+def map_rooms(rooms):
+    floor = []
+    for room in rooms:
+        floor.append({
+            "title": room.title,
+            "north": room.north,
+            "south": room.south,
+            "east": room.east,
+            "west": room.west
+        })
+    return floor
