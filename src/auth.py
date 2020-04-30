@@ -96,7 +96,6 @@ def register_request():
             HP=stats['hp'],
             MP=stats['attack'],
             attack=stats['mp']
-
         )
 
         # add the new user to the database
