@@ -16,6 +16,7 @@ def the_stuff():
     items = db.session.query(Item).all()
     command = None
     command = request.get_json()["command"]
+    item = request.get_json()["item"]
     
     print(f'\nCurrent room: {room.title} items:{room.items}\n')
 
@@ -30,8 +31,6 @@ def the_stuff():
         userItems = parse_inventory(user.items)
     
     if command == 'get':
-
-        item = request.get_json()["item"]
 
         if item in room_inv:
             if room_inv[item] > 1:
@@ -49,6 +48,21 @@ def the_stuff():
             return userItems
         else:
             return jsonify({"error": "Item not found in room"})
+    elif command == 'drop':
+        if item in userItems:
+            if room_inv[item] > 1:
+                room_inv[item] += 1
+                room.items = unparse_inventory(room_inv)
+                #remove item from user inventory
+                del userItems[item]
+                user.items = unparse_inventory(userItems)
+            
+            return userItems
+
+        else:
+            new_item = {item: 1}
+            userItems.update(new_item)
+
     else:
         return jsonify({"error": "Command invalid... check your spelling?"})
 
