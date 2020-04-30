@@ -24,7 +24,7 @@ def map_inventory(items, inventory):
     for item in items:
         for key, value in inventory.items():
             if key == item.name:
-                print(key, item.price)
+                # print(key, item.price)
                 inventory_details.append(
                     {
                         f'{item.name}':{
