@@ -16,12 +16,12 @@ def execute_combat_command():
 
     current_room = db.session.query(Room).filter_by(title = user.current_room).first()
 
-    if current_room.mobs is None:
+    if current_room.NPCs is None:
         return 'nothing to fite here, so fite me irl'
 
     else:
-        print('\n\n', current_room.mobs, '\n\n')
-        current_enemy = db.session.query(Npc).filter_by(ref = current_room.mobs).first()
+        print('\n\n', current_room.NPCs, '\n\n')
+        current_enemy = db.session.query(Npc).filter_by(ref = current_room.NPCs).first()
 
         if command == 'attack':
             # print('\n\n', current_enemy, '\n\n')
@@ -32,7 +32,7 @@ def execute_combat_command():
             user.HP -= current_enemy.attack
             db.session.commit()
             if current_enemy.HP <= 0:
-                current_room.mobs = None # Check if this kills mob
+                current_room.NPCs = None # Check if this kills mob
                 db.session.commit()
 
             # Return interface
@@ -121,7 +121,7 @@ def execute_combat_command():
             }
             controls = {
                 "user": cerealuser,
-                # "mob": cerealmob,
+                # "npc": cerealmob,
                 "room": cerealroom
             }
             return controls
