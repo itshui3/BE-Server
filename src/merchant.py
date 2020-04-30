@@ -19,6 +19,7 @@ def make_a_merchant():
 
     inventoryList = re.split(r'[-\s]', merchant.inventory)
 
+    #seperate inventory data
     inventory = {}
     for i in range(0, len(inventoryList), 2):
         item = inventoryList[i]
@@ -27,6 +28,7 @@ def make_a_merchant():
 
     print(f'\nmerchant inventory: {inventory}')
 
+    #combine inventory data to string
     newInventory = ""
     for item, qty in inventory.items():
         newInventory = newInventory + f'{item}-{qty} '
@@ -35,14 +37,11 @@ def make_a_merchant():
 
     print(f'\nitems: {items}')
     if command == 'peruse':
-        
-        peruse = {
-        }
 
         return inventory
 
     elif command == 'buy':
-        print(f'buying: {buy_item}')
+        
         return "Buying item"
     else:
         return "Incorrect or unknown command"

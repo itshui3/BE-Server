@@ -15,12 +15,12 @@ class Users(UserMixin, db.Model):
     gold = db.Column(db.Integer)
     encounter_cd = db.Column(db.Integer)
     current_room = db.Column(db.String(20))
-    #items
+    items = db.Column(db.String(1024))
     #move
     #use_item
     #examine
 
-    def __init__(self, username, password, character_name, character_type, portrait, HP, MP, attack, gold=500, encounter_cd=0, current_room="1-a1"):
+    def __init__(self, username, password, character_name, character_type, portrait, HP, MP, attack, items, gold=500, encounter_cd=0, current_room="1-a1"):
         self.username = username
         self.password = password
         self.character_name = character_name
@@ -32,7 +32,7 @@ class Users(UserMixin, db.Model):
         self.gold = gold
         self.attack = attack
         self.encounter_cd = encounter_cd
-        # self.items = items
+        self.items = items
         # self.move = move
         # self.use_item = use_item
         # self.examine = examine
@@ -112,7 +112,7 @@ class Item(db.Model):
     heal = db.Column(db.Integer)
     armor = db.Column(db.Integer)
     resuseable = db.Column(db.Boolean)
-
+    
     def __init__(self, title, description, price, action, damage, heal, armor, reusable):
         self.title = title
         self.description = description
