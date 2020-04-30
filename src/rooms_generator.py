@@ -4,10 +4,6 @@ from .models import Room
 
 from .dungeon import floor_1, floor_2, floor_3, floor_4
 
-from .items import items
-
-from .merchant_generator import merchant
-
 #declare rooms
 rooms = {}
 
@@ -110,7 +106,6 @@ app.app_context().push()
 def commit_rooms(rooms):
     with app.app_context():
         for key, room in rooms.items():
-
             db.session.add(room)
         db.session.commit()
 

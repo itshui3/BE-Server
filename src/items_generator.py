@@ -15,6 +15,7 @@ items = {
 
 #weapons    
 'sword_truth': Item(
+    name = 'sword_truth',
     title = "Sword of Truth",
     description = "Live or die by the truth",
     price = 50,
@@ -26,6 +27,7 @@ items = {
 ),
 
 'sword_magic': Item(
+    name = 'sword_magic',
     title = "Sword of Magic",
     description = "Magical sword gives +1 heal on every swing",
     price = 75,
@@ -37,6 +39,7 @@ items = {
 ),
 
 'sword_destiny': Item(
+    name = 'sword_destiny',
     title = "Sword of Destiny",
     description = "Your destiny awaits... +2 heal on every swing",
     price = 100,
@@ -49,6 +52,7 @@ items = {
 
 #special items
 'green_potion': Item(
+    name = 'green_potion',
     title = "Green Potion",
     description = "A not so delicious concoction +50 heal (1 use)",
     price = 50,
@@ -60,6 +64,7 @@ items = {
 ),
 
 'red_potion': Item(
+    name = 'red_potion',
     title = "Red Potion",
     description = "Potion #9, beware who you drink this in front of... +60 heal (1 use)",
     price = 60,
@@ -71,6 +76,7 @@ items = {
 ),
 
 'white_potion': Item(
+    name = 'white_potion',
     title = "White Potion",
     description = "Pineapple and coconut, you're ready for the beach... +70 heal (1 use)",
     price = 70,
@@ -82,6 +88,7 @@ items = {
 ),
 
 'blue_potion': Item(
+    name = 'blue_potion',
     title = "Blue Potion",
     description = "Adios to what ails ya... +80 heal (1 use)",
     price = 80,
@@ -94,6 +101,7 @@ items = {
 
 #armor
 'helmet': Item(
+    name = 'helmet',
     title = "Shiny helmet",
     description = "A gleaming helmet that blinds enemies from the glare +50 armor",
     price = 50,
@@ -105,6 +113,7 @@ items = {
 ),
 
 'chest_armor': Item(
+    name = 'chest_armor',
     title = "Chest armor",
     description = "Protects your heart from any who look in +100 armor",
     price = 100,
@@ -116,6 +125,7 @@ items = {
 ),
 
 'leg_armor': Item(
+    name = 'leg_armor',
     title = "Leg armor",
     description = "Keeps your legs in one piece +25 armor",
     price = 25,

@@ -61,4 +61,9 @@ def create_app():
     from .items import items_blueprint
     app.register_blueprint(items_blueprint, url_prefix=playerPrefix + '/items')
 
+    merchantPrefix = '/merchant'
+    # player Routes
+    from .merchant import merchant
+    app.register_blueprint(merchant, url_prefix=merchantPrefix)
+
     return app
