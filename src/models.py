@@ -102,7 +102,7 @@ class Merchant(db.Model):
         self.buy_from = buy_from
         self.sell_to = sell_to
 
-class Item:
+class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(20), unique=True)
     description = db.Column(db.String(1024))
