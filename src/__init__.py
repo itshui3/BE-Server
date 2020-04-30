@@ -58,12 +58,17 @@ def create_app():
     from .combat import combat
     app.register_blueprint(combat, url_prefix=playerPrefix + '/combat')
 
-    from .items import items_blueprint
-    app.register_blueprint(items_blueprint, url_prefix=playerPrefix + '/items')
+    # from .items import items_blueprint
+    # app.register_blueprint(items_blueprint, url_prefix=playerPrefix + '/items')
 
     merchantPrefix = '/merchant'
-    # player Routes
+    # mechant Routes
     from .merchant import merchant
     app.register_blueprint(merchant, url_prefix=merchantPrefix)
+
+    itemsPrefix = '/items'
+    # items Routes
+    from .items import items_blueprint
+    app.register_blueprint(items_blueprint, url_prefix=itemsPrefix)
 
     return app

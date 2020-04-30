@@ -12,3 +12,6 @@ JWT_SECRET = os.environ.get("SECRET")
 def the_stuff():
     userId = jwt.decode(request.headers['token'], JWT_SECRET)['user_id']
     user = db.session.query(Users).filter_by(id = userId)
+    room = db.session.query(Room).filter_by(title = user.current_room).first()
+
+    print(f'Current room')
