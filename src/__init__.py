@@ -62,4 +62,8 @@ def create_app():
 
     app.register_blueprint(items_blueprint, url_prefix=playerPrefix + "/items")
 
+    from .messages import messages
+
+    app.register_blueprint(messages)
+
     return app

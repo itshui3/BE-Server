@@ -2,8 +2,11 @@ from flask_login import UserMixin
 
 from . import db
 
+
 class Users(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)  # primary keys are required by SQLAlchemy
+    id = db.Column(
+        db.Integer, primary_key=True
+    )  # primary keys are required by SQLAlchemy
     username = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     character_name = db.Column(db.String(100))
@@ -15,12 +18,25 @@ class Users(UserMixin, db.Model):
     gold = db.Column(db.Integer)
     encounter_cd = db.Column(db.Integer)
     current_room = db.Column(db.String(20))
-    #items
-    #move
-    #use_item
-    #examine
+    # items
+    # move
+    # use_item
+    # examine
 
-    def __init__(self, username, password, character_name, character_type, portrait, HP, MP, attack, gold=500, encounter_cd=0, current_room="1_a1"):
+    def __init__(
+        self,
+        username,
+        password,
+        character_name,
+        character_type,
+        portrait,
+        HP,
+        MP,
+        attack,
+        gold=500,
+        encounter_cd=0,
+        current_room="1_a1",
+    ):
         self.username = username
         self.password = password
         self.character_name = character_name
@@ -37,6 +53,7 @@ class Users(UserMixin, db.Model):
         # self.use_item = use_item
         # self.examine = examine
 
+
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(20), unique=True)
@@ -49,7 +66,9 @@ class Room(db.Model):
     south = db.Column(db.String(20))
     west = db.Column(db.String(20))
 
-    def __init__(self, title, description, floor, items, NPCs, north, east, south, west):
+    def __init__(
+        self, title, description, floor, items, NPCs, north, east, south, west
+    ):
         self.title = title
         self.description = description
         self.floor = floor
@@ -59,8 +78,10 @@ class Room(db.Model):
         self.east = east
         self.south = south
         self.west = west
+
     def __str__(self):
-        return f'{self.title}, {self.description}, {self.floor}, {self.items}, {self.NPCs}, {self.north}, {self.east}, {self.south}, {self.west}'
+        return f"{self.title}, {self.description}, {self.floor}, {self.items}, {self.NPCs}, {self.north}, {self.east}, {self.south}, {self.west}"
+
 
 class NPC(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -82,18 +103,20 @@ class NPC(db.Model):
         self.isHostile = isHostile
         self.attack = attack
 
+
 class Merchant(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=True)
-    #view inventory
-    #buy from
-    #sell to
+    # view inventory
+    # buy from
+    # sell to
 
     def __init__(self, name, view_inventory, buy_from, sell_to):
         self.name = name
         self.view_inventory = view_inventory
         self.buy_from = buy_from
         self.sell_to = sell_to
+
 
 class Item:
     id = db.Column(db.Integer, primary_key=True)
@@ -106,7 +129,9 @@ class Item:
     armor = db.Column(db.Integer)
     resuseable = db.Column(db.Boolean)
 
-    def __init__(self, title, description, price, action, damage, heal, armor, reusable):
+    def __init__(
+        self, title, description, price, action, damage, heal, armor, reusable
+    ):
         self.title = title
         self.description = description
         self.price = price
@@ -115,3 +140,13 @@ class Item:
         self.heal = heal
         self.armor = armor
         self.resuseable = reusable
+
+
+class Messages(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100))
+    message = db.Column(db.String(1024))
+
+    def __init__(self, username, message):
+        self.username = username
+        self.message = message
