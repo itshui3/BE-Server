@@ -19,7 +19,7 @@ def unparse_inventory(uparsed_dict):
     return newList
 
 def map_inventory(items, inventory):
-# map item price and description to inventory
+    # map item price and description to inventory
     inventory_details = []
     for item in items:
         for key, value in inventory.items():
