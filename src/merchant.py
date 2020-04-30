@@ -73,6 +73,16 @@ def make_a_merchant():
         else:
             return 'Item is not in inventory'
     elif command == 'sell':
+        sell_item = request.get_json()["sell_item"]
+        if sell_item is None:
+            return "sell_item not specified"
+        else:
+            userItems = parse_inventory(user.items)
+            if sell_item in userItems:
+                return sell_item
+            else:
+                return 'Item is not in user items'
+        
         return "Sell stuff"
     else:
         return "Incorrect or unknown command"
