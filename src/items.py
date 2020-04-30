@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 import jwt
 import os
 from . import db
@@ -30,13 +30,29 @@ def the_stuff():
         userItems = parse_inventory(user.items)
     
     if command == 'get':
-        print('getting')
+
         item = request.get_json()["item"]
+
         if item in room_inv:
-            return 'Item found'
+            if room_inv[item] > 1:
+                room_inv[item] -= 1
+                room.items = unparse_inventory(room_inv)
+                userItems.update(room_inv[item])
+                print(userItems)
+            else:
+                new_item = {item: 1}
+                userItems.update(new_item)
+                print(userItems)
+                # user.items = f'{buy_item}-1'
+                del room_inv[item]
+                room.items = unparse_inventory(room_inv)
+                # userItems.update(room_inv[item])
+                
+            # db.session.commit()
+            return f'Item found {room_inv}'
         else:
-            return 'Item not found in room'
+            return jsonify({"error": "Item not found in room"})
     else:
-        return 'Command invalid... check your spelling?'
+        return jsonify({"error": "Command invalid... check your spelling?"})
 
     return room_inv
