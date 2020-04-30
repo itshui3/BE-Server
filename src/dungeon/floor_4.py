@@ -5,6 +5,7 @@ def make_room(Room, title, description, floor):
         floor = floor,
         items = '',
         NPCs = '',
+        mobs = '',
         north = None,
         east = None,
         south = None,

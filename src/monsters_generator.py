@@ -11,6 +11,7 @@ def commit_monster(monster):
 
 goblin = Npc(
   'Goblin', 
+  'goblin',
   'an ugly or grotesque sprite that is usually mischievous and sometimes evil and malicious', 
   'Club', 
   10, # Gold
@@ -23,6 +24,7 @@ commit_monster(goblin)
 
 slime = Npc(
   'Slime', 
+  'slime',
   'an amorphous, shapeless, gooey creature', 
   'Red Potion', 
   3, 
@@ -35,6 +37,7 @@ commit_monster(slime)
 
 black_rat = Npc(
   'Black Rat', 
+  'black_rat',
   ' a medium-sized, slender brownish-or grayish-black rat with coarse fur and a long, sparsely haired, scaly tail', 
   '', 
   1, 
