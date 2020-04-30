@@ -18,13 +18,11 @@ def make_a_merchant():
     command = request.get_json()["command"]
     buy_item = request.get_json()["buy_item"]
 
+    print(f'Db merchant inventory {merchant.inventory}')
+
     inventory = parse_inventory(merchant.inventory)
 
     print(f'\nmerchant inventory: {inventory}')
-    
-    newInventory = unparse_inventory(inventory)
-
-    print(f'newInventory: {newInventory}')
 
     print(f'\nitems: {items}')
     if command == 'peruse':
@@ -36,10 +34,15 @@ def make_a_merchant():
         if buy_item is None:
             return 'buy_item is not specified'
         elif buy_item in inventory:
+
             if inventory[buy_item] < 1:
                 return "Item is out of stock"
             else:
-                return(f'buying: {buy_item}')
+                inventory[buy_item] -= 1
+                newInv = unparse_inventory(inventory)
+                merchant.inventory = str(newInv)
+                db.session.commit()
+                return inventory
         else:
             return 'Item is not in inventory'
 
