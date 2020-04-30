@@ -12,14 +12,3 @@ merchant = Merchant(
 )
 
 # print(merchant.inventory)
-
-from . import db, create_app
-app = create_app()
-app.app_context().push()
-
-def commit_merchant(merchant):
-    with app.app_context():
-        db.session.add(merchant)
-        db.session.commit()
-
-commit_merchant(merchant)
