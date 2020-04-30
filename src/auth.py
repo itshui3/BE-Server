@@ -35,6 +35,7 @@ def login():
     else:
         payload = {
             "user_id": user.id,
+            "username": user.username,
             "exp": datetime.utcnow() + timedelta(seconds=JWT_EXP_DELTA_SECONDS),
         }
 
@@ -57,35 +58,34 @@ def register_request():
     #     pass
     # create new user with the form data. Hash the password so plaintext version isn't saved.
 
-
     if req["password1"] == req["password2"]:
         # Character Instantiation
         stats = {}
 
-        if req["character_type"] == 'ninja':
-            stats['hp'] = 25
-            stats['attack'] = 15
-            stats['mp'] = 5
-        
-        if req["character_type"] == 'warrior':
-            stats['hp'] = 45
-            stats['attack'] = 6
-            stats['mp'] = 5
+        if req["character_type"] == "ninja":
+            stats["hp"] = 25
+            stats["attack"] = 15
+            stats["mp"] = 5
 
-        if req["character_type"] == 'mage':
-            stats['hp'] = 15
-            stats['attack'] = 20
-            stats['mp'] = 60
+        if req["character_type"] == "warrior":
+            stats["hp"] = 45
+            stats["attack"] = 6
+            stats["mp"] = 5
 
-        if req["character_type"] == 'hunter':
-            stats['hp'] = 25
-            stats['attack'] = 12
-            stats['mp'] = 5
+        if req["character_type"] == "mage":
+            stats["hp"] = 15
+            stats["attack"] = 20
+            stats["mp"] = 60
 
-        if req["character_type"] == 'thief':
-            stats['hp'] = 25
-            stats['attack'] = 15
-            stats['mp'] = 5
+        if req["character_type"] == "hunter":
+            stats["hp"] = 25
+            stats["attack"] = 12
+            stats["mp"] = 5
+
+        if req["character_type"] == "thief":
+            stats["hp"] = 25
+            stats["attack"] = 15
+            stats["mp"] = 5
 
         new_user = Users(
             username=req["username"],
@@ -93,9 +93,9 @@ def register_request():
             character_name=req["character_name"],
             character_type=req["character_type"],
             portrait=req["portrait"],
-            HP=stats['hp'],
-            MP=stats['attack'],
-            attack=stats['mp']
+            HP=stats["hp"],
+            MP=stats["attack"],
+            attack=stats["mp"],
         )
 
         # add the new user to the database
@@ -105,6 +105,7 @@ def register_request():
 
         payload = {
             "user_id": current_user.id,
+            "username": current_user.username,
             "exp": datetime.utcnow() + timedelta(seconds=JWT_EXP_DELTA_SECONDS),
         }
 
