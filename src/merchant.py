@@ -45,29 +45,34 @@ def make_a_merchant():
                 inventory[buy_item] -= 1
                 newInv = unparse_inventory(inventory)
                 merchant.inventory = str(newInv)
-                user.gold = user.gold - price
-                userItems = {}
 
-                if user.items: #check if user has items
-                    userItems = parse_inventory(user.items) #parse user items into dict
+                if price > user.gold:
+                    return "You do not have enough gold to purchase"
+                else: #if user has enough gold
+                    user.gold = user.gold - price
+                    userItems = {}
 
-                    if buy_item in userItems: #check if item is already in user items
-                        userItems[buy_item] += 1
+                    if user.items: #check if user has items
+                        userItems = parse_inventory(user.items) #parse user items into dict
 
-                    else: #if user doesn't already have item, add
-                        userItems.update({buy_item: 1})
-                    user.items = unparse_inventory(userItems) #unparse user items into string
+                        if buy_item in userItems: #check if item is already in user items
+                            userItems[buy_item] += 1
 
-                else: #if user doesn't have items, create item&qty
-                    userItems = {buy_item: 1}
-                    user.items = f'{buy_item}-1'
+                        else: #if user doesn't already have item, add
+                            userItems.update({buy_item: 1})
+                        user.items = unparse_inventory(userItems) #unparse user items into string
 
-                db.session.commit()
-                userItems.update({"gold": user.gold})
-                return userItems
+                    else: #if user doesn't have items, create item&qty
+                        userItems = {buy_item: 1}
+                        user.items = f'{buy_item}-1'
+
+                    db.session.commit()
+                    userItems.update({"gold": user.gold})
+                    return userItems
 
         else:
             return 'Item is not in inventory'
-
+    elif command == 'sell':
+        return "Sell stuff"
     else:
         return "Incorrect or unknown command"
