@@ -99,16 +99,4 @@ def print_all_NPCs(rooms):
 
 # print_all_NPCs(rooms)
 
-from . import create_app
-app = create_app()
-app.app_context().push()
-
-def commit_rooms(rooms):
-    with app.app_context():
-        for key, room in rooms.items():
-            db.session.add(room)
-        db.session.commit()
-
-commit_rooms(rooms)
-
 # print(rooms)
