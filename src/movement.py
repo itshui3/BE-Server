@@ -10,25 +10,25 @@ JWT_SECRET = os.environ.get("SECRET")
 def make_a_movement():
     userId = jwt.decode(request.headers['token'], JWT_SECRET)['user_id']
     user = db.session.query(Users).filter_by(id = userId).first()
-    command = None
-    command = request.get_json()["direction"]
+    direction = None
+    direction = request.get_json()["direction"]
 
     # print(f'user herrrrrrrre:{user.username}')
     current_room = db.session.query(Room).filter_by(title = user.current_room).first()
 
     try:
-        command = request.get_json()['direction']
+        direction = request.get_json()['direction']
     except:
         print('failed to get direction from post req')
         return 'failed to get direction from post request'
-    if command:
-        print(f'\ncommand: {command}')
+    if direction:
+        print(f'\ndirection: {direction}')
     else:
-        print('no command')
-        return 'command not set'
+        print('no direction')
+        return 'direction not set'
 
     # Directional Interface
-    if command == 'n':
+    if direction == 'n':
         if current_room.north is None:
             return 'ya done goofed, no room here'
         else:
@@ -88,7 +88,7 @@ def make_a_movement():
 
             return controls
 
-    elif command == 'e':
+    elif direction == 'e':
         if current_room.east is None:
             return 'ya done goofed, no room here'
         else:
@@ -148,7 +148,7 @@ def make_a_movement():
 
             return controls
 
-    elif command == 's':
+    elif direction == 's':
         if current_room.south is None:
             return 'ya done goofed, no room here'
         else:
@@ -207,7 +207,7 @@ def make_a_movement():
 
             return controls
 
-    elif command == 'w':
+    elif direction == 'w':
         if current_room.west is None:
             return 'ya done goofed, no room here'
         else:

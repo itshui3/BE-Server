@@ -51,6 +51,9 @@ def create_app():
     from .movement import movement
     app.register_blueprint(movement, url_prefix=playerPrefix + '/movement')
 
+    from .combat import combat
+    app.register_blueprint(combat, url_prefix=playerPrefix + '/combat')
+
     from .items import items_blueprint
     app.register_blueprint(items_blueprint, url_prefix=playerPrefix + '/items')
 
