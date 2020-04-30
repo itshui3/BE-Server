@@ -49,7 +49,7 @@ def make_a_merchant():
                 if price > user.gold:
                     return "You do not have enough gold to purchase"
                 else: #if user has enough gold
-                    user.gold = user.gold - price
+                    # user.gold = user.gold - price
                     userItems = {}
 
                     if user.items: #check if user has items
@@ -79,7 +79,9 @@ def make_a_merchant():
         else:
             userItems = parse_inventory(user.items)
             if sell_item in userItems:
-                return sell_item
+                if userItems[sell_item] > 1:
+                    return 'items greater than 1'
+                return userItems
             else:
                 return 'Item is not in user items'
         
