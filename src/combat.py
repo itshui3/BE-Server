@@ -114,7 +114,7 @@ def execute_combat_command():
                 "description": current_room.description,
                 "floor": current_room.floor,
                 "items": current_room.items,
-                "mobs": current_room.mobs
+                "mobs": current_room.mobs,
                 "NPCs": current_room.NPCs,
                 "north": current_room.north,
                 "east": current_room.east,

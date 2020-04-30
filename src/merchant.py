@@ -64,7 +64,7 @@ def make_a_merchant():
                         user.items = f'{buy_item}-1'
 
                     db.session.commit()
-                    userItems.update({"gold": user.gold})
+                    userItems.update({"gold": user.gold, "items": user.items})
                     return userItems
 
         else:
@@ -87,7 +87,7 @@ def make_a_merchant():
                         price = find_price(sell_item, items)
                         user.gold += (price - 10)
                     db.session.commit()
-                    userItems.update({"gold": user.gold})
+                    userItems.update({"gold": user.gold, "items": user.items})
                     return userItems
 
                 elif userItems[sell_item] == 1: #check if user inventory is last one
@@ -101,7 +101,7 @@ def make_a_merchant():
                         price = find_price(sell_item, items)
                         user.gold += (price - 10)
                         db.session.commit()
-                        userItems.update({"gold": user.gold})
+                        userItems.update({"gold": user.gold, "items": user.items})
                         return userItems
                     else:
                         inventory[sell_item] += 1
@@ -110,7 +110,7 @@ def make_a_merchant():
                         user.gold += (price - 10)
                         user.items = None
                         db.session.commit()
-                        userItems.update({"gold": user.gold})
+                        userItems.update({"gold": user.gold, "items": user.items})
                         return userItems
                 # return userItems
             else:
