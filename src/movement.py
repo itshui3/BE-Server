@@ -3,6 +3,7 @@ import jwt
 import os
 from . import db
 from .models import Users, Room, Npc, Merchant, Item
+from .utils import map_rooms
 
 movement = Blueprint('movement', __name__)
 JWT_SECRET = os.environ.get("SECRET")
@@ -11,6 +12,8 @@ def make_a_movement():
     
     userId = jwt.decode(request.headers['token'], JWT_SECRET)['user_id']
     user = db.session.query(Users).filter_by(id = userId).first()
+    room = db.session.query(Room).filter_by(title = user.current_room).first()
+
     direction = None
     direction = request.get_json()["direction"]
 
@@ -21,16 +24,20 @@ def make_a_movement():
         print('could not access current_room properly')
         return 'something went wrong with accessing current_room'
 
-    try:
-        direction = request.get_json()['direction']
-    except:
-        print('failed to get direction from post req')
-        return 'failed to get direction from post request'
-    if direction:
-        print(f'\ndirection: {direction}')
-    else:
-        print('no direction')
-        return 'direction not set'
+    # try:
+    #     direction = request.get_json()['direction']
+    # except:
+    #     print('failed to get direction from post req')
+    #     return 'failed to get direction from post request'
+    # if direction:
+    #     print(f'\ndirection: {direction}')
+    # else:
+    #     print('no direction')
+    #     return 'direction not set'
+
+    if current_room.mobs is not None:
+        print(current_room.mobs)
+        return 'monster present, deal with it before leaving the room'
 
     # Directional Interface
     if direction == 'n':
@@ -44,6 +51,9 @@ def make_a_movement():
 
             room = user.current_room
             newRoom = db.session.query(Room).filter_by(title = room).first()
+            floor = db.session.query(Room).filter_by(floor = newRoom.floor).all()
+            floor_map = map_rooms(floor)
+
             serialuser = {
                 "id": int(user.id),
                 "username": str(user.username),
@@ -65,6 +75,7 @@ def make_a_movement():
                 "floor": newRoom.floor,
                 "items": newRoom.items,
                 "NPCs": newRoom.NPCs,
+                "mobs": newRoom.mobs,
                 "north": newRoom.north,
                 "east": newRoom.east,
                 "south": newRoom.south,
@@ -88,7 +99,8 @@ def make_a_movement():
             controls = {
                 "user": serialuser,
                 "room": serialroom,
-                "npc": npc
+                "npc": npc,
+                "map": floor_map
             }
 
             return controls
@@ -104,6 +116,9 @@ def make_a_movement():
 
             room = user.current_room
             newRoom = db.session.query(Room).filter_by(title = room).first()
+            floor = db.session.query(Room).filter_by(floor = newRoom.floor).all()
+            floor_map = map_rooms(floor)
+
             serialuser = {
                 "id": int(user.id),
                 "username": str(user.username),
@@ -125,6 +140,7 @@ def make_a_movement():
                 "floor": newRoom.floor,
                 "items": newRoom.items,
                 "NPCs": newRoom.NPCs,
+                "mobs": newRoom.mobs,
                 "north": newRoom.north,
                 "east": newRoom.east,
                 "south": newRoom.south,
@@ -148,7 +164,8 @@ def make_a_movement():
             controls = {
                 "user": serialuser,
                 "room": serialroom,
-                "npc": npc
+                "npc": npc,
+                "map": floor_map
             }
 
             return controls
@@ -164,6 +181,9 @@ def make_a_movement():
 
             room = user.current_room
             newRoom = db.session.query(Room).filter_by(title = room).first()
+            floor = db.session.query(Room).filter_by(floor = newRoom.floor).all()
+            floor_map = map_rooms(floor)
+            
             serialuser = {
                 "id": int(user.id),
                 "username": str(user.username),
@@ -185,6 +205,7 @@ def make_a_movement():
                 "floor": newRoom.floor,
                 "items": newRoom.items,
                 "NPCs": newRoom.NPCs,
+                "mobs": newRoom.mobs,
                 "north": newRoom.north,
                 "east": newRoom.east,
                 "south": newRoom.south,
@@ -207,7 +228,8 @@ def make_a_movement():
             controls = {
                 "user": serialuser,
                 "room": serialroom,
-                "npc": npc
+                "npc": npc,
+                "map": floor_map
             }
 
             return controls
@@ -223,6 +245,9 @@ def make_a_movement():
 
             room = user.current_room
             newRoom = db.session.query(Room).filter_by(title = room).first()
+            floor = db.session.query(Room).filter_by(floor = newRoom.floor).all()
+            floor_map = map_rooms(floor)
+            
             serialuser = {
                 "id": int(user.id),
                 "username": str(user.username),
@@ -244,6 +269,7 @@ def make_a_movement():
                 "floor": newRoom.floor,
                 "items": newRoom.items,
                 "NPCs": newRoom.NPCs,
+                "mobs": newRoom.mobs,
                 "north": newRoom.north,
                 "east": newRoom.east,
                 "south": newRoom.south,
@@ -267,7 +293,8 @@ def make_a_movement():
             controls = {
                 "user": serialuser,
                 "room": serialroom,
-                "npc": npc
+                "npc": npc,
+                "map": floor_map
             }
 
             return controls

@@ -47,3 +47,15 @@ def find_price(item_to_check, items):
         if item_to_check == item.name:
             price = item.price
     return price
+
+def map_rooms(rooms):
+    floor = []
+    for room in rooms:
+        floor.append({
+            "title": room.title,
+            "north": room.north,
+            "south": room.south,
+            "east": room.east,
+            "west": room.west
+        })
+    return floor
