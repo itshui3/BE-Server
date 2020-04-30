@@ -33,11 +33,11 @@ def make_a_merchant():
     elif command == 'buy':
         buy_item = request.get_json()["buy_item"]
         if buy_item is None:
-            return 'buy_item is not specified'
+            return jsonify({"error":'buy_item is not specified'})
 
         elif buy_item in inventory:
             if inventory[buy_item] < 1:
-                return "Item is out of stock"
+                return jsonify({"error":"Item is out of stock"})
             else:
                 price = find_price(buy_item, items)
                 print(f'Price found: {price}')
@@ -46,7 +46,7 @@ def make_a_merchant():
                 merchant.inventory = str(updateInv)
 
                 if price > user.gold:
-                    return "You do not have enough gold to purchase"
+                    return jsonify({"error":"You do not have enough gold to purchase"})
                 else: #if user has enough gold
                     user.gold = user.gold - price
 
@@ -68,11 +68,11 @@ def make_a_merchant():
                     return userItems
 
         else:
-            return 'Item is not in inventory'
+            return jsonify({"error":'Item is not in inventory'})
     elif command == 'sell':
         sell_item = request.get_json()["sell_item"]
         if sell_item is None: #check if sell_item exists
-            return "sell_item not specified"
+            return jsonify({"error":"sell_item not specified"})
         else: #if sell_item exists
             if sell_item in userItems:
                 print(f'Qty in user items: {userItems[sell_item]}')
@@ -87,6 +87,7 @@ def make_a_merchant():
                         price = find_price(sell_item, items)
                         user.gold += (price - 10)
                     db.session.commit()
+                    userItems.update({"gold": user.gold})
                     return userItems
 
                 elif userItems[sell_item] == 1: #check if user inventory is last one
@@ -100,6 +101,7 @@ def make_a_merchant():
                         price = find_price(sell_item, items)
                         user.gold += (price - 10)
                         db.session.commit()
+                        userItems.update({"gold": user.gold})
                         return userItems
                     else:
                         inventory[sell_item] += 1
@@ -108,11 +110,12 @@ def make_a_merchant():
                         user.gold += (price - 10)
                         user.items = None
                         db.session.commit()
-                        return 'All items in user item sold'
+                        userItems.update({"gold": user.gold})
+                        return userItems
                 # return userItems
             else:
-                return 'Item is not in user items'
+                return jsonify({"error":'Item is not in user items'})
         
-        return "Sell stuff"
+        # return "Sell stuff"
     else:
-        return "Incorrect or unknown command"
+        return jsonify({"error":"Incorrect or unknown command"})
