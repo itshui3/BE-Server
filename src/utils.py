@@ -45,6 +45,7 @@ def map_rooms(rooms):
     floor = []
     for room in rooms:
         floor.append({
+            "id": room.id,
             "title": room.title,
             "north": room.north,
             "south": room.south,

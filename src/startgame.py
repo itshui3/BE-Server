@@ -38,6 +38,7 @@ def get_character_info():
         "floor": room.floor,
         "items": room.items,
         "NPCs": room.NPCs,
+        "mobs": room.mobs,
         "north": room.north,
         "east": room.east,
         "south": room.south,
