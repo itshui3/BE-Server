@@ -11,6 +11,7 @@ def execute_combat_command():
 
     userId = jwt.decode(request.headers['token'], JWT_SECRET)['user_id']
     user = db.session.query(Users).filter_by(id = userId).first()
+    print('\n\n', 'userid', userId, '\n\n')
     command = None
     command = request.get_json()["command"]
 
@@ -19,7 +20,7 @@ def execute_combat_command():
 
     if current_room.NPCs == '':
         return 'nothing to fite here, so fite me irl'
-        
+
     else:
         current_enemy = db.session.query(Npc).filter_by(name = current_room.NPCs).first()
 

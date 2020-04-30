@@ -8,13 +8,18 @@ movement = Blueprint('movement', __name__)
 JWT_SECRET = os.environ.get("SECRET")
 @movement.route('/', methods=['POST'])
 def make_a_movement():
+    
     userId = jwt.decode(request.headers['token'], JWT_SECRET)['user_id']
     user = db.session.query(Users).filter_by(id = userId).first()
     direction = None
     direction = request.get_json()["direction"]
 
-    # print(f'user herrrrrrrre:{user.username}')
-    current_room = db.session.query(Room).filter_by(title = user.current_room).first()
+    current_room = None
+    try:
+        current_room = db.session.query(Room).filter_by(title = user.current_room).first()
+    except:
+        print('could not access current_room properly')
+        return 'something went wrong with accessing current_room'
 
     try:
         direction = request.get_json()['direction']
