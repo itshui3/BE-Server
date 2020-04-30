@@ -62,7 +62,7 @@ class Room(db.Model):
     def __str__(self):
         return f'{self.title}, {self.description}, {self.floor}, {self.items}, {self.NPCs}, {self.north}, {self.east}, {self.south}, {self.west}'
 
-class NPC(db.Model):
+class Npc(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=True)
     description = db.Column(db.String(1024))
@@ -74,7 +74,6 @@ class NPC(db.Model):
 
     def __init__(self, name, description, items, gold, HP, isHostile, attack):
         self.name = name
-        self.title = title
         self.description = description
         self.items = items
         self.gold = gold
@@ -103,7 +102,7 @@ class Merchant(db.Model):
         self.buy_from = buy_from
         self.sell_to = sell_to
 
-class Item:
+class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(20), unique=True)
     description = db.Column(db.String(1024))

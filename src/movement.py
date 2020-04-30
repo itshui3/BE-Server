@@ -1,8 +1,8 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 import jwt
 import os
 from . import db
-from .models import Users, Room
+from .models import Users, Room, Npc, Merchant, Item
 
 movement = Blueprint('movement', __name__)
 JWT_SECRET = os.environ.get("SECRET")
@@ -15,10 +15,7 @@ def make_a_movement():
 
     # print(f'user herrrrrrrre:{user.username}')
     current_room = db.session.query(Room).filter_by(title = user.current_room).first()
-    # print(current_room)
-    rooms = db.session.query(Room).all()
 
-    # print('\n\n', rooms, '\n\n')
     try:
         command = request.get_json()['direction']
     except:
@@ -41,16 +38,55 @@ def make_a_movement():
             db.session.commit()
 
             room = user.current_room
-
-            controls = {
-                user: user,
-                room: room,
-                #inventory ? inventory : null
-                #npc ? npc : null
-                #mob ? mob : null
+            newRoom = db.session.query(Room).filter_by(title = room).first()
+            serialuser = {
+                "id": int(user.id),
+                "username": str(user.username),
+                "character_name": str(user.character_name),
+                "character_type": str(user.character_type),
+                "portrait": str(user.portrait),
+                "HP": int(user.HP),
+                "MP": int(user.MP),
+                "attack": int(user.attack),
+                "gold": int(user.gold),
+                "encounter_cd": int(user.encounter_cd),
+                "current_room": str(user.current_room)
             }
 
-            return f'moving to {room}'
+            serialroom = {
+                "id": newRoom.id,
+                "title": newRoom.title,
+                "description": newRoom.description,
+                "floor": newRoom.floor,
+                "items": newRoom.items,
+                "NPCs": newRoom.NPCs,
+                "north": newRoom.north,
+                "east": newRoom.east,
+                "south": newRoom.south,
+                "west": newRoom.west
+            }
+
+            npc = None
+            # if newRoom.NPCs is not None:
+            #     mynpc = db.session.query(NPC).filter_by(name = newRoom.NPCs).first()
+            #     npc = {
+            #         "id": mynpc.id,
+            #         "name": mynpc.name,
+            #         "description": mynpc.description,
+            #         "items": mynpc.items,
+            #         "gold": mynpc.gold,
+            #         "HP": mynpc.HP,
+            #         "isHostile": mynpc.isHostile,
+            #         "attack": mynpc.attack
+            #     }
+
+            controls = {
+                "user": serialuser,
+                "room": serialroom,
+                "npc": npc
+            }
+
+            return controls
 
     elif command == 'e':
         if current_room.east is None:
@@ -62,16 +98,55 @@ def make_a_movement():
             db.session.commit()
 
             room = user.current_room
-
-            controls = {
-                user: user,
-                room: room,
-                #inventory ? inventory : null
-                #npc ? npc : null
-                #mob ? mob : null
+            newRoom = db.session.query(Room).filter_by(title = room).first()
+            serialuser = {
+                "id": int(user.id),
+                "username": str(user.username),
+                "character_name": str(user.character_name),
+                "character_type": str(user.character_type),
+                "portrait": str(user.portrait),
+                "HP": int(user.HP),
+                "MP": int(user.MP),
+                "attack": int(user.attack),
+                "gold": int(user.gold),
+                "encounter_cd": int(user.encounter_cd),
+                "current_room": str(user.current_room)
             }
 
-            return f'moving to {room}'
+            serialroom = {
+                "id": newRoom.id,
+                "title": newRoom.title,
+                "description": newRoom.description,
+                "floor": newRoom.floor,
+                "items": newRoom.items,
+                "NPCs": newRoom.NPCs,
+                "north": newRoom.north,
+                "east": newRoom.east,
+                "south": newRoom.south,
+                "west": newRoom.west
+            }
+
+            npc = None
+            # if newRoom.NPCs is not None:
+            #     mynpc = db.session.query(NPC).filter_by(name = newRoom.NPCs).first()
+            #     npc = {
+            #         "id": mynpc.id,
+            #         "name": mynpc.name,
+            #         "description": mynpc.description,
+            #         "items": mynpc.items,
+            #         "gold": mynpc.gold,
+            #         "HP": mynpc.HP,
+            #         "isHostile": mynpc.isHostile,
+            #         "attack": mynpc.attack
+            #     }
+
+            controls = {
+                "user": serialuser,
+                "room": serialroom,
+                "npc": npc
+            }
+
+            return controls
 
     elif command == 's':
         if current_room.south is None:
@@ -83,16 +158,54 @@ def make_a_movement():
             db.session.commit()
 
             room = user.current_room
-
-            controls = {
-                user: user,
-                room: room,
-                #inventory ? inventory : null
-                #npc ? npc : null
-                #mob ? mob : null
+            newRoom = db.session.query(Room).filter_by(title = room).first()
+            serialuser = {
+                "id": int(user.id),
+                "username": str(user.username),
+                "character_name": str(user.character_name),
+                "character_type": str(user.character_type),
+                "portrait": str(user.portrait),
+                "HP": int(user.HP),
+                "MP": int(user.MP),
+                "attack": int(user.attack),
+                "gold": int(user.gold),
+                "encounter_cd": int(user.encounter_cd),
+                "current_room": str(user.current_room)
             }
 
-            return f'moving to {room}'
+            serialroom = {
+                "id": newRoom.id,
+                "title": newRoom.title,
+                "description": newRoom.description,
+                "floor": newRoom.floor,
+                "items": newRoom.items,
+                "NPCs": newRoom.NPCs,
+                "north": newRoom.north,
+                "east": newRoom.east,
+                "south": newRoom.south,
+                "west": newRoom.west
+            }
+            npc = None
+            # if newRoom.NPCs is not None:
+            #     mynpc = db.session.query(NPC).filter_by(name = newRoom.NPCs).first()
+            #     npc = {
+            #         "id": mynpc.id,
+            #         "name": mynpc.name,
+            #         "description": mynpc.description,
+            #         "items": mynpc.items,
+            #         "gold": mynpc.gold,
+            #         "HP": mynpc.HP,
+            #         "isHostile": mynpc.isHostile,
+            #         "attack": mynpc.attack
+            #     }
+
+            controls = {
+                "user": serialuser,
+                "room": serialroom,
+                "npc": npc
+            }
+
+            return controls
 
     elif command == 'w':
         if current_room.west is None:
@@ -104,13 +217,52 @@ def make_a_movement():
             db.session.commit()
 
             room = user.current_room
-
-            controls = {
-                user: user,
-                room: room,
-                #inventory ? inventory : null
-                #npc ? npc : null
-                #mob ? mob : null
+            newRoom = db.session.query(Room).filter_by(title = room).first()
+            serialuser = {
+                "id": int(user.id),
+                "username": str(user.username),
+                "character_name": str(user.character_name),
+                "character_type": str(user.character_type),
+                "portrait": str(user.portrait),
+                "HP": int(user.HP),
+                "MP": int(user.MP),
+                "attack": int(user.attack),
+                "gold": int(user.gold),
+                "encounter_cd": int(user.encounter_cd),
+                "current_room": str(user.current_room)
             }
 
-            return f'moving to {room}'
+            serialroom = {
+                "id": newRoom.id,
+                "title": newRoom.title,
+                "description": newRoom.description,
+                "floor": newRoom.floor,
+                "items": newRoom.items,
+                "NPCs": newRoom.NPCs,
+                "north": newRoom.north,
+                "east": newRoom.east,
+                "south": newRoom.south,
+                "west": newRoom.west
+            }
+
+            npc = None
+            # if newRoom.NPCs is not None:
+            #     mynpc = db.session.query(NPC).filter_by(name = newRoom.NPCs).first()
+            #     npc = {
+            #         "id": mynpc.id,
+            #         "name": mynpc.name,
+            #         "description": mynpc.description,
+            #         "items": mynpc.items,
+            #         "gold": mynpc.gold,
+            #         "HP": mynpc.HP,
+            #         "isHostile": mynpc.isHostile,
+            #         "attack": mynpc.attack
+            #     }
+
+            controls = {
+                "user": serialuser,
+                "room": serialroom,
+                "npc": npc
+            }
+
+            return controls
