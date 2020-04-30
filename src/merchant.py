@@ -1,9 +1,9 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 import jwt
 import os
 from . import db
 from .models import Users, Room, Merchant, Item
-from .utils import parse_inventory, unparse_inventory
+from .utils import parse_inventory, unparse_inventory, map_inventory
 
 merchant = Blueprint('merchant', __name__)
 JWT_SECRET = os.environ.get("SECRET")
@@ -22,16 +22,12 @@ def make_a_merchant():
     inventory = parse_inventory(merchant.inventory)
 
     print(f'\nmerchant inventory: {inventory}')
-    # need to map item price and description to inventory
-    # for item in items:
-    #     for key, value in inventory.items():
-    #         if key == item.name:
-    #             print(key, item.price)
+    inventory_details = map_inventory(items, inventory)
+    # print(f'\ndetails: {inventory_details}')
 
-    # print(f'\nitems: {items}')
     if command == 'peruse':
 
-        return inventory
+        return jsonify(inventory_details)
 
     elif command == 'buy':
 

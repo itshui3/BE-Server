@@ -17,3 +17,13 @@ def unparse_inventory(uparsed_dict):
         newList = newList + f'{item}-{qty} '
     newList = newList[:-1] #remove last space at end of string
     return newList
+
+def map_inventory(items, inventory):
+# map item price and description to inventory
+    inventory_details = []
+    for item in items:
+        for key, value in inventory.items():
+            if key == item.name:
+                print(key, item.price)
+                inventory_details.append({"name": item.name, "quantity":value, "title": item.title, "description": item.description, "price": item.price, "action": item.action, "damage": item.damage, "heal": item.heal, "armor": item.armor,})
+    return inventory_details

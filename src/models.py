@@ -115,8 +115,8 @@ class Item(db.Model):
     resuseable = db.Column(db.Boolean)
     
     def __init__(self, name, title, description, price, action, damage, heal, armor, reusable):
-        self.title = title
         self.name = name
+        self.title = title
         self.description = description
         self.price = price
         self.action = action
