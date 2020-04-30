@@ -29,7 +29,11 @@ CORS_ORIGIN = os.environ.get("CORS_ORIGIN")
 
 def create_app():
     app = Flask(__name__)
-    CORS(app, resources={r"/*": {"origins": CORS_ORIGIN}})
+
+    if CORS_ORIGIN:
+        CORS(app, resources={r"/*": {"origins": CORS_ORIGIN}})
+    else:
+        CORS(app, resources={r"/*": {"origins": "*"}})
 
     dburl = os.environ.get("DATABASE_URL")
 
@@ -42,6 +46,8 @@ def create_app():
 
     migrate = Migrate(app, db)
     db.init_app(app)
+    with app.app_context():
+        db.create_all()
 
     # Route Registry
     # from .public import public
@@ -54,9 +60,16 @@ def create_app():
 
     playerPrefix = "/player"
     # player Routes
+
+    from .startgame import startgame
+    app.register_blueprint(startgame, url_prefix=playerPrefix + '/startgame')
+
     from .movement import movement
 
     app.register_blueprint(movement, url_prefix=playerPrefix + "/movement")
+
+    from .combat import combat
+    app.register_blueprint(combat, url_prefix=playerPrefix + '/combat')
 
     from .items import items_blueprint
 
@@ -65,5 +78,10 @@ def create_app():
     from .messages import messages
 
     app.register_blueprint(messages)
+
+    merchantPrefix = '/merchant'
+    # player Routes
+    from .merchant import merchant
+    app.register_blueprint(merchant, url_prefix=merchantPrefix)
 
     return app
