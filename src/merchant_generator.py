@@ -3,7 +3,7 @@ from .items import items
 
 merchant = Merchant(
     name = 'Merchant',
-    inventory = {'leg_armor':items['leg_armor'], 'helmet':items['helmet'], 'green_potion':items['green_potion'], 'blue_potion':items['blue_potion']},
+    inventory = 'leg_armor-1 helmet-1 green_potion-3 green_potion-3 blue_potion-3',
     gold = 1000,
     HP = 1000,
     attack = 1000,
@@ -13,3 +13,14 @@ merchant = Merchant(
 )
 
 # print(merchant.inventory)
+
+from . import db, create_app
+app = create_app()
+app.app_context().push()
+
+def commit_merchant(merchant):
+    with app.app_context():
+        db.session.add(merchant)
+        db.session.commit()
+
+commit_merchant(merchant)
