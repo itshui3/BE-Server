@@ -42,7 +42,13 @@ def the_stuff():
                 userItems.update(new_item)
                 user.items = unparse_inventory(userItems)
                 del room_inv[item]
-                room.items = unparse_inventory(room_inv)
+                print(f'\nRoom items after get: {room_inv}-length: {len(room_inv)}\n')
+                if len(room_inv) == 0:
+                    print('no items left')
+                    room.items = None
+                else:
+                    print('some items left')
+                    room.items = unparse_inventory(room_inv)
                 
             db.session.commit()
             return userItems
@@ -57,11 +63,20 @@ def the_stuff():
                 del userItems[item]
                 user.items = unparse_inventory(userItems)
             
+            else: #if room inventory is none
+                new_item = {item: 1}
+                room_inv.update(new_item)
+                room_inv.items = unparse_inventory(room_inv)
+                del userItems[item]
+                user.items = unparse_inventory(userItems)
+            # db.session.commit()
             return userItems
 
+                
+
         else:
-            new_item = {item: 1}
-            userItems.update(new_item)
+            return jsonify({"error": "Item not found in user inventory"})
+            
 
     else:
         return jsonify({"error": "Command invalid... check your spelling?"})
