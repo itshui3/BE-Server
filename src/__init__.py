@@ -18,7 +18,11 @@ CORS_ORIGIN = os.environ.get("CORS_ORIGIN")
 
 def create_app():
     app = Flask(__name__)
-    CORS(app, resources={r"/*": {"origins": CORS_ORIGIN}})
+
+    if CORS_ORIGIN:
+        CORS(app, resources={r"/*": {"origins": CORS_ORIGIN}})
+    else:
+        CORS(app, resources={r"/*": {"origins": "*"}})
 
     dburl = os.environ.get("DATABASE_URL")
 
