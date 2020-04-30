@@ -17,16 +17,21 @@ def make_a_merchant():
     command = request.get_json()["command"]
     buy_item = request.get_json()["buy_item"]
 
-    inventory = re.split(r'[-\s]', merchant.inventory)
+    inventoryList = re.split(r'[-\s]', merchant.inventory)
 
-    inv = {}
-    for i in range(0, len(inventory), 2):
-        item = inventory[i]
-        qty = int(inventory[i+1])
-        inv.update({item:qty})
+    inventory = {}
+    for i in range(0, len(inventoryList), 2):
+        item = inventoryList[i]
+        qty = int(inventoryList[i+1])
+        inventory.update({item:qty})
 
-    # print(f'user herrrrrrrre:{user.username}')
-    print(f'\nmerchant inventory: {inv}')
+    print(f'\nmerchant inventory: {inventory}')
+
+    newInventory = ""
+    for item, qty in inventory.items():
+        newInventory = newInventory + f'{item}-{qty} '
+
+    print(f'newInventory: {newInventory}')
 
     print(f'\nitems: {items}')
     if command == 'peruse':
@@ -34,7 +39,7 @@ def make_a_merchant():
         peruse = {
         }
 
-        return inv
+        return inventory
 
     elif command == 'buy':
         print(f'buying: {buy_item}')
