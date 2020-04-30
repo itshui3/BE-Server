@@ -38,10 +38,11 @@ def make_a_merchant():
             if inventory[buy_item] < 1:
                 return "Item is out of stock"
             else:
+                print(items[buy_item].price)
                 inventory[buy_item] -= 1
                 newInv = unparse_inventory(inventory)
                 merchant.inventory = str(newInv)
-                db.session.commit()
+                # db.session.commit()
                 return inventory
         else:
             return 'Item is not in inventory'

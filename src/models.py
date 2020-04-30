@@ -104,6 +104,7 @@ class Merchant(db.Model):
 
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20))
     title = db.Column(db.String(20), unique=True)
     description = db.Column(db.String(1024))
     price = db.Column(db.Integer)
@@ -113,8 +114,9 @@ class Item(db.Model):
     armor = db.Column(db.Integer)
     resuseable = db.Column(db.Boolean)
     
-    def __init__(self, title, description, price, action, damage, heal, armor, reusable):
+    def __init__(self, name, title, description, price, action, damage, heal, armor, reusable):
         self.title = title
+        self.name = name
         self.description = description
         self.price = price
         self.action = action
