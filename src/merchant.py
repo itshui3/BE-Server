@@ -33,6 +33,15 @@ def make_a_merchant():
 
     elif command == 'buy':
 
-        return "Buying item"
+        if buy_item is None:
+            return 'buy_item is not specified'
+        elif buy_item in inventory:
+            if inventory[buy_item] < 1:
+                return "Item is out of stock"
+            else:
+                return(f'buying: {buy_item}')
+        else:
+            return 'Item is not in inventory'
+
     else:
         return "Incorrect or unknown command"
