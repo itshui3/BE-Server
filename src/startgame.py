@@ -3,6 +3,7 @@ import jwt
 import os
 from . import db
 from .models import Users, Room
+from .utils import map_rooms
 
 startgame = Blueprint('startgame', __name__)
 JWT_SECRET = os.environ.get("SECRET")
@@ -11,6 +12,9 @@ def get_character_info():
     userId = jwt.decode(request.headers['token'], JWT_SECRET)['user_id']
     user = db.session.query(Users).filter_by(id = userId).first()
     room = db.session.query(Room).filter_by(title = user.current_room).first()
+    floor = db.session.query(Room).filter_by(floor = room.floor).all()
+
+    floor_map = map_rooms(floor)
 
     cerealuser = {
         "id": user.id,
@@ -42,7 +46,8 @@ def get_character_info():
 
     controls = {
         "user": cerealuser,
-        "room": serialroom
+        "room": serialroom,
+        "map": floor_map
     }
 
     return controls
