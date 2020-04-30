@@ -63,6 +63,7 @@ def link_rooms(rooms):
     rooms['2-b4'].east = rooms['2-b5'].title
 
     rooms['2-c1'].east = rooms['2-c2'].title
+    rooms['2-c1'].south = rooms['2-d1'].title
     #c2.north = b2
     #c3.north = b3
     rooms['2-c4'].east = rooms['2-c5'].title

@@ -40,3 +40,10 @@ def map_inventory(items, inventory):
                         }
                     })
     return inventory_details
+
+def find_price(item_to_check, items):
+    price = 0
+    for item in items:
+        if item_to_check == item.name:
+            price = item.price
+    return price
