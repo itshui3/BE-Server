@@ -51,7 +51,7 @@ def get_posts():
         message_arr.append(
             {"id": message.id, "username": message.username, "message": message.message}
         )
-    print(jsonify(message_arr))
+    print(jsonify(message_arr.reverse()))
     # return json.dumps(messages)
     # message_arr = []
     # for message in messages:
@@ -60,4 +60,5 @@ def get_posts():
     #     )
     # print(jsonify(message_arr))
     # print(jsonify(message_arr))
-    return jsonify(message_arr)
+    print("len", len(message_arr))
+    return jsonify(message_arr[slice(0, 50)])
