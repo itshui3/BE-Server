@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 import jwt
 import os
 from . import db
-from .models import Users, Room
+from .models import Users, Room, NPC, Merchant, Item
 
 movement = Blueprint('movement', __name__)
 JWT_SECRET = os.environ.get("SECRET")
@@ -66,12 +66,24 @@ def make_a_movement():
                 "west": newRoom.west
             }
 
+            npc = None
+            # if newRoom.NPCs is not None:
+            #     mynpc = db.session.query(NPC).filter_by(name = newRoom.NPCs).first()
+            #     npc = {
+            #         "id": mynpc.id,
+            #         "name": mynpc.name,
+            #         "description": mynpc.description,
+            #         "items": mynpc.items,
+            #         "gold": mynpc.gold,
+            #         "HP": mynpc.HP,
+            #         "isHostile": mynpc.isHostile,
+            #         "attack": mynpc.attack
+            #     }
+
             controls = {
                 "user": serialuser,
-                "room": serialroom
-                #inventory ? inventory : null
-                #npc ? npc : null
-                #mob ? mob : null
+                "room": serialroom,
+                "npc": npc
             }
 
             return controls
@@ -114,12 +126,24 @@ def make_a_movement():
                 "west": newRoom.west
             }
 
+            npc = None
+            # if newRoom.NPCs is not None:
+            #     mynpc = db.session.query(NPC).filter_by(name = newRoom.NPCs).first()
+            #     npc = {
+            #         "id": mynpc.id,
+            #         "name": mynpc.name,
+            #         "description": mynpc.description,
+            #         "items": mynpc.items,
+            #         "gold": mynpc.gold,
+            #         "HP": mynpc.HP,
+            #         "isHostile": mynpc.isHostile,
+            #         "attack": mynpc.attack
+            #     }
+
             controls = {
                 "user": serialuser,
-                "room": serialroom
-                #inventory ? inventory : null
-                #npc ? npc : null
-                #mob ? mob : null
+                "room": serialroom,
+                "npc": npc
             }
 
             return controls
@@ -161,13 +185,24 @@ def make_a_movement():
                 "south": newRoom.south,
                 "west": newRoom.west
             }
+            npc = None
+            # if newRoom.NPCs is not None:
+            #     mynpc = db.session.query(NPC).filter_by(name = newRoom.NPCs).first()
+            #     npc = {
+            #         "id": mynpc.id,
+            #         "name": mynpc.name,
+            #         "description": mynpc.description,
+            #         "items": mynpc.items,
+            #         "gold": mynpc.gold,
+            #         "HP": mynpc.HP,
+            #         "isHostile": mynpc.isHostile,
+            #         "attack": mynpc.attack
+            #     }
 
             controls = {
                 "user": serialuser,
-                "room": serialroom
-                #inventory ? inventory : null
-                #npc ? npc : null
-                #mob ? mob : null
+                "room": serialroom,
+                "npc": npc
             }
 
             return controls
@@ -210,12 +245,24 @@ def make_a_movement():
                 "west": newRoom.west
             }
 
+            npc = None
+            # if newRoom.NPCs is not None:
+            #     mynpc = db.session.query(NPC).filter_by(name = newRoom.NPCs).first()
+            #     npc = {
+            #         "id": mynpc.id,
+            #         "name": mynpc.name,
+            #         "description": mynpc.description,
+            #         "items": mynpc.items,
+            #         "gold": mynpc.gold,
+            #         "HP": mynpc.HP,
+            #         "isHostile": mynpc.isHostile,
+            #         "attack": mynpc.attack
+            #     }
+
             controls = {
                 "user": serialuser,
-                "room": serialroom
-                #inventory ? inventory : null
-                #npc ? npc : null
-                #mob ? mob : null
+                "room": serialroom,
+                "npc": npc
             }
 
             return controls
