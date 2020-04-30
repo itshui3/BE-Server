@@ -24,7 +24,7 @@ def map_inventory(items, inventory):
     for item in items:
         for key, value in inventory.items():
             if key == item.name:
-                print(key, item.price)
+                # print(key, item.price)
                 inventory_details.append(
                     {
                         f'{item.name}':{
@@ -40,6 +40,13 @@ def map_inventory(items, inventory):
                         }
                     })
     return inventory_details
+
+def find_price(item_to_check, items):
+    price = 0
+    for item in items:
+        if item_to_check == item.name:
+            price = item.price
+    return price
 
 def map_rooms(rooms):
     floor = []
