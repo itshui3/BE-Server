@@ -1,8 +1,12 @@
 from .models import Npc
+from . import db, create_app
+app = create_app()
+app.app_context().push()
 
 monsters = {
     "goblin": Npc(
         'Goblin', 
+        'goblin',
         'an ugly or grotesque sprite that is usually mischievous and sometimes evil and malicious', 
         'Club', 
         10, # Gold
@@ -13,6 +17,7 @@ monsters = {
 
     "slime": Npc(
         'Slime', 
+        'slime',
         'an amorphous, shapeless, gooey creature', 
         'Red Potion', 
         3, 
@@ -23,6 +28,7 @@ monsters = {
 
     "black_rat": Npc(
         'Black Rat', 
+        'black_rat',
         'a medium-sized, slender brownish-or grayish-black rat with coarse fur and a long, sparsely haired, scaly tail', 
         '', 
         1, 

@@ -11,29 +11,30 @@ def execute_combat_command():
 
     userId = jwt.decode(request.headers['token'], JWT_SECRET)['user_id']
     user = db.session.query(Users).filter_by(id = userId).first()
-    print('\n\n', 'userid', userId, '\n\n')
     command = None
     command = request.get_json()["command"]
 
     current_room = db.session.query(Room).filter_by(title = user.current_room).first()
-    print('\n\n', current_room.NPCs, '\n\n')
 
-    if current_room.NPCs == '':
+    if current_room.mobs is None:
         return 'nothing to fite here, so fite me irl'
 
     else:
-        current_enemy = db.session.query(Npc).filter_by(name = current_room.NPCs).first()
+        print('\n\n', current_room.mobs, '\n\n')
+        current_enemy = db.session.query(Npc).filter_by(ref = current_room.mobs).first()
 
         if command == 'attack':
+            # print('\n\n', current_enemy, '\n\n')
             # Take user's attack and subtract monster's hp by that amount
             current_enemy.HP -= user.attack
+
             # Take monster's attack and subtract user's hp by that amount
             user.HP -= current_enemy.attack
-
-            if current_enemy.HP <= 0:
-                current_room.NPCs = None # Check if this kills mob
-
             db.session.commit()
+            if current_enemy.HP <= 0:
+                current_room.mobs = None # Check if this kills mob
+                db.session.commit()
+
             # Return interface
             cerealuser = {
                 "id": int(user.id),

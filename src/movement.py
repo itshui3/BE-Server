@@ -24,16 +24,20 @@ def make_a_movement():
         print('could not access current_room properly')
         return 'something went wrong with accessing current_room'
 
-    try:
-        direction = request.get_json()['direction']
-    except:
-        print('failed to get direction from post req')
-        return 'failed to get direction from post request'
-    if direction:
-        print(f'\ndirection: {direction}')
-    else:
-        print('no direction')
-        return 'direction not set'
+    # try:
+    #     direction = request.get_json()['direction']
+    # except:
+    #     print('failed to get direction from post req')
+    #     return 'failed to get direction from post request'
+    # if direction:
+    #     print(f'\ndirection: {direction}')
+    # else:
+    #     print('no direction')
+    #     return 'direction not set'
+
+    if current_room.mobs is not None:
+        print(current_room.mobs)
+        return 'monster present, deal with it before leaving the room'
 
     # Directional Interface
     if direction == 'n':
@@ -71,6 +75,7 @@ def make_a_movement():
                 "floor": newRoom.floor,
                 "items": newRoom.items,
                 "NPCs": newRoom.NPCs,
+                "mobs": newRoom.mobs,
                 "north": newRoom.north,
                 "east": newRoom.east,
                 "south": newRoom.south,
@@ -135,6 +140,7 @@ def make_a_movement():
                 "floor": newRoom.floor,
                 "items": newRoom.items,
                 "NPCs": newRoom.NPCs,
+                "mobs": newRoom.mobs,
                 "north": newRoom.north,
                 "east": newRoom.east,
                 "south": newRoom.south,
@@ -199,6 +205,7 @@ def make_a_movement():
                 "floor": newRoom.floor,
                 "items": newRoom.items,
                 "NPCs": newRoom.NPCs,
+                "mobs": newRoom.mobs,
                 "north": newRoom.north,
                 "east": newRoom.east,
                 "south": newRoom.south,
@@ -262,6 +269,7 @@ def make_a_movement():
                 "floor": newRoom.floor,
                 "items": newRoom.items,
                 "NPCs": newRoom.NPCs,
+                "mobs": newRoom.mobs,
                 "north": newRoom.north,
                 "east": newRoom.east,
                 "south": newRoom.south,
