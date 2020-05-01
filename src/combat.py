@@ -19,13 +19,17 @@ def execute_combat_command():
     current_room = db.session.query(Room).filter_by(title = user.current_room).first()
 
     if current_room.mobs is None:
-        print('\n\n', f"{user.character_name} attempted attacking in a Room not occupied by a hostile.", '\n\n')
+        if command == 'run':
+            print('\n\n', f"{user.character_name} started running around.", '\n\n')
+        else:
+            print('\n\n', f"{user.character_name} attempted attacking in a Room not occupied by a hostile.", '\n\n')
         message = {
             "combat": {"message": ['No monster present.']}
         }
         return message
 
     else:
+        
         print('\n\n', "Starting attacking ["+str(current_room.NPCs)+"]", '\n\n')
         current_enemy = db.session.query(Npc).filter_by(id = current_room.mobs).first()
 
@@ -109,7 +113,8 @@ def execute_combat_command():
         elif command == 'run':
             # If monster type is special, cannot run
             # Otherwise, there is a chance that mob will disappear
-            npc = Npc.query.get(id = current_room.mobs)
+            npc = db.session.query(Npc).filter_by(id = current_room.mobs).first()
+
             current_room.mobs = None
             db.session.delete(npc)
             db.session.commit()
@@ -148,8 +153,6 @@ def execute_combat_command():
                 ]
             }
 
-            print('\n\n'+fleeMsgs[randint(0, len(fleeMsgs)-1)]+'\n\n')
-
             fleeMsgs = [
                 f"{user.character_name} fled from the scene of battle.",
                 f"{user.character_name} demonstrated that cowardice is the solution with the highest chance for survival. 100%.",
@@ -160,6 +163,7 @@ def execute_combat_command():
                 f"{user.character_name} got scurred.",
                 f"{user.character_name} decided it just wasn't worth it in a game that doesn't yield exp for slain mobs."
             ]
+            print('\n\n'+fleeMsgs[randint(0, len(fleeMsgs)-1)]+'\n\n')
             controls = {
                 "user": cerealuser,
                 # "npc": cerealmob,
