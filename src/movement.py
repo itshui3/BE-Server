@@ -383,6 +383,7 @@ def make_a_movement():
                     "isHostile": mynpc.isHostile,
                     "attack": mynpc.attack
                 }
+                #Add comment to save
             else: #random spawn
                 if randint(0, 4) == 0:
                     floor = newRoom.floor.split(' ')
