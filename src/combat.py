@@ -23,6 +23,9 @@ def execute_combat_command():
             print('\n\n', f"{user.character_name} started running around.", '\n\n')
         else:
             print('\n\n', f"{user.character_name} attempted attacking in a Room not occupied by a hostile.", '\n\n')
+        error = {
+            "error": 'No monster present.'
+        }
         message = {
             "message": ['No monster present.']
         }
@@ -41,7 +44,8 @@ def execute_combat_command():
         }
         controls = {
             "combat": message,
-            "user": cerealuser
+            "user": cerealuser,
+            "error": error,
         }
         return controls
 
