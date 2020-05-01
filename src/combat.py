@@ -4,6 +4,8 @@ import os
 from . import db
 from .models import Users, Room, Npc, Merchant, Item
 
+from random import randint
+
 combat = Blueprint('combat', __name__)
 JWT_SECRET = os.environ.get("SECRET")
 @combat.route('/', methods=['POST'])
@@ -17,10 +19,14 @@ def execute_combat_command():
     current_room = db.session.query(Room).filter_by(title = user.current_room).first()
 
     if current_room.mobs is None:
-        return 'nothing to fite here, so fite me irl'
+        print('\n\n', f"{user.character_name} attempted attacking in a Room not occupied by a hostile.", '\n\n')
+        message = {
+            "combat": {"message": ['No monster present.']}
+        }
+        return message
 
     else:
-        print('\n\n', current_room.NPCs, '\n\n')
+        print('\n\n', "Starting attacking ["+str(current_room.NPCs)+"]", '\n\n')
         current_enemy = db.session.query(Npc).filter_by(id = current_room.mobs).first()
 
         if command == 'attack':
@@ -32,6 +38,7 @@ def execute_combat_command():
             user.HP -= current_enemy.attack
             db.session.commit()
             if current_enemy.HP <= 0:
+
                 current_room.mobs = None # Check if this kills mob
 
                 db.session.delete(current_enemy)
@@ -74,10 +81,28 @@ def execute_combat_command():
                 "south": current_room.south,
                 "west": current_room.west
             }
+            message = [
+                f"You attack a {current_enemy.name} and deal {user.attack} damage.", 
+                f"{current_enemy.name} has {current_enemy.HP} health points remaining.",
+                f"{current_enemy.name} attacks you dealing {current_enemy.attack} damage.",
+                f"You have {user.HP} health points remaining."
+            ]
+
+            print(
+                '\n\n', 
+                f"{user.character_name} attacks a {current_enemy.name} and deals {user.attack} damage.\n{current_enemy.name} has {current_enemy.HP} health points remaining.", 
+                '\n\n',
+                f"{current_enemy.name} attacks {user.character_name} dealing {current_enemy.attack} damage.\n{user.character_name} has {user.HP} health points remaining."
+            )
+            if current_enemy.HP < 1:
+                message.append(f"You have slain the {current_enemy.name}.")
             controls = {
                 "user": cerealuser,
                 "mob": cerealmob,
-                "room": cerealroom
+                "room": cerealroom,
+                "combat": {
+                    "message": message
+                }
             }
             return controls
 
@@ -115,9 +140,30 @@ def execute_combat_command():
                 "south": current_room.south,
                 "west": current_room.west
             }
+
+            message = {
+                "message": [
+                    "You ran away from the monster, good job.",
+                    "Running away is op right now because it always succeeds with no penalty."
+                ]
+            }
+
+            print('\n\n'+fleeMsgs[randint(0, len(fleeMsgs)-1)]+'\n\n')
+
+            fleeMsgs = [
+                f"{user.character_name} fled from the scene of battle.",
+                f"{user.character_name} demonstrated that cowardice is the solution with the highest chance for survival. 100%.",
+                f"{user.character_name} ran.",
+                f"{user.character_name} succumbed to excessive fear.",
+                f"{user.character_name} exercised self-concern.",
+                f"{user.character_name} demonstrated a severe lack of spine.",
+                f"{user.character_name} got scurred.",
+                f"{user.character_name} decided it just wasn't worth it in a game that doesn't yield exp for slain mobs."
+            ]
             controls = {
                 "user": cerealuser,
                 # "npc": cerealmob,
-                "room": cerealroom
+                "room": cerealroom,
+                "combat": message
             }
             return controls
