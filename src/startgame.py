@@ -26,6 +26,7 @@ def get_character_info():
         "HP": user.HP,
         "MP": user.MP,
         "attack": user.attack,
+        "items": user.items,
         "gold": user.gold,
         "encounter_cd": user.encounter_cd,
         "current_room": user.current_room
@@ -38,6 +39,7 @@ def get_character_info():
         "floor": room.floor,
         "items": room.items,
         "NPCs": room.NPCs,
+        "mobs": room.mobs,
         "north": room.north,
         "east": room.east,
         "south": room.south,
