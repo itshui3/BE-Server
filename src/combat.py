@@ -26,7 +26,11 @@ def execute_combat_command():
         message = {
             "combat": {"message": ['No monster present.']}
         }
-        return message
+        controls = {
+            "combat": message,
+            "user": user
+        }
+        return controls
 
     else:
         
