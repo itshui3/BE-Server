@@ -46,7 +46,7 @@ monsters = {
         40,
         True,
         10
-    )
+    ),
 
     "ogre": Npc(
         "Ogre",
@@ -68,7 +68,7 @@ monsters = {
         70,
         True,
         20
-    )
+    ),
 
     "mind_flayer": Npc(
         'Mind Flayer',

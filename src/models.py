@@ -44,7 +44,7 @@ class Room(db.Model):
     floor = db.Column(db.String(20))
     items = db.Column(db.String(1024))
     NPCs = db.Column(db.String(1024))
-    mobs = db.Column(db.String(1024))
+    mobs = db.Column(db.Integer)
     north = db.Column(db.String(20))
     east = db.Column(db.String(20))
     south = db.Column(db.String(20))
@@ -66,8 +66,8 @@ class Room(db.Model):
 
 class Npc(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), unique=True)
-    ref = db.Column(db.String(64), unique=True) 
+    name = db.Column(db.String(20))
+    ref = db.Column(db.String(64))
     description = db.Column(db.String(1024))
     items = db.Column(db.String(1024))
     gold = db.Column(db.Integer)

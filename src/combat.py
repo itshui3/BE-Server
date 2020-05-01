@@ -21,7 +21,7 @@ def execute_combat_command():
 
     else:
         print('\n\n', current_room.NPCs, '\n\n')
-        current_enemy = db.session.query(Npc).filter_by(ref = current_room.NPCs).first()
+        current_enemy = db.session.query(Npc).filter_by(id = current_room.NPCs).first()
 
         if command == 'attack':
             # print('\n\n', current_enemy, '\n\n')
@@ -32,7 +32,10 @@ def execute_combat_command():
             user.HP -= current_enemy.attack
             db.session.commit()
             if current_enemy.HP <= 0:
+                npc = Npc.query.get(id = current_room.NPCs)
                 current_room.NPCs = None # Check if this kills mob
+
+                db.session.delete(npc)
                 db.session.commit()
 
             # Return interface
@@ -81,7 +84,9 @@ def execute_combat_command():
         elif command == 'run':
             # If monster type is special, cannot run
             # Otherwise, there is a chance that mob will disappear
+            npc = Npc.query.get(id = current_room.NPCs)
             current_room.NPCs = None
+            db.session.delete(npc)
             db.session.commit()
 
             cerealuser = {
@@ -97,16 +102,6 @@ def execute_combat_command():
                 "encounter_cd": int(user.encounter_cd),
                 "current_room": str(user.current_room)
             }
-            # cerealmob = {
-            #     "id": current_enemy.id,
-            #     "name": current_enemy.name,
-            #     "description": current_enemy.description,
-            #     "items": current_enemy.items,
-            #     "gold": current_enemy.gold,
-            #     "HP": current_enemy.HP,
-            #     "isHostile": current_enemy.isHostile,
-            #     "attack": current_enemy.attack
-            # }
             cerealroom = {
                 "id": current_room.id,
                 "title": current_room.title,
