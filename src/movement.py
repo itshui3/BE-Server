@@ -28,9 +28,9 @@ def make_a_movement():
         return {"error": 'something went wrong with accessing current_room'}
 
 
-    if current_room.NPCs is not None:
+    if current_room.mobs is not None:
         # Need to return interface too
-        print(current_room.NPCs)
+        print(current_room.mobs)
         return {"error": 'monster present, deal with it before leaving the room'}
 
     # Directional Interface
@@ -91,7 +91,7 @@ def make_a_movement():
                     "attack": mynpc.attack
                 }
             else: #random spawn
-                if randint(0, 1) == 0:
+                if randint(0, 4) == 0:
                     floor = newRoom.floor.split(' ')
                     monster_list = monster_catalogue["dungeon_1"][floor[1]].split(' ')
                     spawnThis = monster_list[randint(0, len(monster_list)-1)]
@@ -109,7 +109,7 @@ def make_a_movement():
                     db.session.add(mob)
                     db.session.commit()
                     mob = db.session.query(Npc).all()[-1]
-                    print(mob, 'mob and respective id', mob.id)
+
                     npc = {
                         "id": mob.id,
                         "name": mob.name,
@@ -189,7 +189,7 @@ def make_a_movement():
                     "attack": mynpc.attack
                 }
             else: #random spawn
-                if randint(0, 1) == 0:
+                if randint(0, 4) == 0:
                     floor = newRoom.floor.split(' ')
                     monster_list = monster_catalogue["dungeon_1"][floor[1]].split(' ')
                     spawnThis = monster_list[randint(0, len(monster_list)-1)]
@@ -207,7 +207,7 @@ def make_a_movement():
                     db.session.add(mob)
                     db.session.commit()
                     mob = db.session.query(Npc).all()[-1]
-                    print(mob, 'mob and respective id', mob.id)
+
                     npc = {
                         "id": mob.id,
                         "name": mob.name,
@@ -286,7 +286,7 @@ def make_a_movement():
                     "attack": mynpc.attack
                 }
             else: #random spawn
-                if randint(0, 1) == 0:
+                if randint(0, 4) == 0:
                     floor = newRoom.floor.split(' ')
                     monster_list = monster_catalogue["dungeon_1"][floor[1]].split(' ')
                     spawnThis = monster_list[randint(0, len(monster_list)-1)]
@@ -304,7 +304,7 @@ def make_a_movement():
                     db.session.add(mob)
                     db.session.commit()
                     mob = db.session.query(Npc).all()[-1]
-                    print(mob, 'mob and respective id', mob.id)
+
                     npc = {
                         "id": mob.id,
                         "name": mob.name,
@@ -384,7 +384,7 @@ def make_a_movement():
                     "attack": mynpc.attack
                 }
             else: #random spawn
-                if randint(0, 1) == 0:
+                if randint(0, 4) == 0:
                     floor = newRoom.floor.split(' ')
                     monster_list = monster_catalogue["dungeon_1"][floor[1]].split(' ')
                     spawnThis = monster_list[randint(0, len(monster_list)-1)]
@@ -402,7 +402,7 @@ def make_a_movement():
                     db.session.add(mob)
                     db.session.commit()
                     mob = db.session.query(Npc).all()[-1]
-                    print(mob, 'mob and respective id', mob.id)
+
                     npc = {
                         "id": mob.id,
                         "name": mob.name,
