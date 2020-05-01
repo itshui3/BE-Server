@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 import jwt
 import os
 from . import db
-from .models import Users, Room, Npc
+from .models import Users, Room, Npc, Merchant
 from .utils import map_rooms
 
 startgame = Blueprint('startgame', __name__)
@@ -55,6 +55,17 @@ def get_character_info():
             "gold": npc.gold,
             "HP": npc.HP,
             "isHostile": npc.isHostile,
+            "attack": npc.attack
+        }
+
+    if room.NPCs is not None:
+        npc = db.session.query(Merchant).filter_by(name = room.NPCs).first()
+        cerealmob = {
+            "id": npc.id,
+            "name": npc.name,
+            "inventory": npc.inventory,
+            "gold": npc.gold,
+            "HP": npc.HP,
             "attack": npc.attack
         }
 
