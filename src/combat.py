@@ -20,8 +20,8 @@ def execute_combat_command():
         return 'nothing to fite here, so fite me irl'
 
     else:
-        print('\n\n', current_room.mobs, '\n\n')
-        current_enemy = db.session.query(Npc).filter_by(ref = current_room.mobs).first()
+        print('\n\n', current_room.NPCs, '\n\n')
+        current_enemy = db.session.query(Npc).filter_by(id = current_room.mobs).first()
 
         if command == 'attack':
             # print('\n\n', current_enemy, '\n\n')
@@ -33,6 +33,8 @@ def execute_combat_command():
             db.session.commit()
             if current_enemy.HP <= 0:
                 current_room.mobs = None # Check if this kills mob
+
+                db.session.delete(current_enemy)
                 db.session.commit()
 
             # Return interface
@@ -82,7 +84,9 @@ def execute_combat_command():
         elif command == 'run':
             # If monster type is special, cannot run
             # Otherwise, there is a chance that mob will disappear
-            current_room.NPCs = None
+            npc = Npc.query.get(id = current_room.mobs)
+            current_room.mobs = None
+            db.session.delete(npc)
             db.session.commit()
 
             cerealuser = {
@@ -98,16 +102,6 @@ def execute_combat_command():
                 "encounter_cd": int(user.encounter_cd),
                 "current_room": str(user.current_room)
             }
-            # cerealmob = {
-            #     "id": current_enemy.id,
-            #     "name": current_enemy.name,
-            #     "description": current_enemy.description,
-            #     "items": current_enemy.items,
-            #     "gold": current_enemy.gold,
-            #     "HP": current_enemy.HP,
-            #     "isHostile": current_enemy.isHostile,
-            #     "attack": current_enemy.attack
-            # }
             cerealroom = {
                 "id": current_room.id,
                 "title": current_room.title,
@@ -123,7 +117,7 @@ def execute_combat_command():
             }
             controls = {
                 "user": cerealuser,
-                # "mob": cerealmob,
+                # "npc": cerealmob,
                 "room": cerealroom
             }
             return controls

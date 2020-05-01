@@ -5,6 +5,9 @@ from . import db
 from .models import Users, Room, Npc, Merchant, Item
 from .utils import map_rooms, parse_inventory
 
+from .monster_catalogue import monster_catalogue, monster_machine
+from random import randint
+
 movement = Blueprint('movement', __name__)
 JWT_SECRET = os.environ.get("SECRET")
 @movement.route('/', methods=['POST'])
@@ -22,27 +25,18 @@ def make_a_movement():
         current_room = db.session.query(Room).filter_by(title = user.current_room).first()
     except:
         print('could not access current_room properly')
-        return 'something went wrong with accessing current_room'
+        return {"error": 'something went wrong with accessing current_room'}
 
-    # try:
-    #     direction = request.get_json()['direction']
-    # except:
-    #     print('failed to get direction from post req')
-    #     return 'failed to get direction from post request'
-    # if direction:
-    #     print(f'\ndirection: {direction}')
-    # else:
-    #     print('no direction')
-    #     return 'direction not set'
 
     if current_room.mobs is not None:
+        # Need to return interface too
         print(current_room.mobs)
-        return 'monster present, deal with it before leaving the room'
+        return {"error": 'monster present, deal with it before leaving the room'}
 
     # Directional Interface
     if direction == 'n':
         if current_room.north is None:
-            return 'ya done goofed, no room here'
+            return {"error": 'No room in this direction'}
         else:
             moveTo = current_room.north
             print(f'\nmoveTo: {moveTo}\n')
@@ -84,18 +78,50 @@ def make_a_movement():
             }
 
             npc = None
-            # if newRoom.NPCs is not None:
-            #     mynpc = db.session.query(NPC).filter_by(name = newRoom.NPCs).first()
-            #     npc = {
-            #         "id": mynpc.id,
-            #         "name": mynpc.name,
-            #         "description": mynpc.description,
-            #         "items": mynpc.items,
-            #         "gold": mynpc.gold,
-            #         "HP": mynpc.HP,
-            #         "isHostile": mynpc.isHostile,
-            #         "attack": mynpc.attack
-            #     }
+            if newRoom.mobs is not None:
+                mynpc = db.session.query(Npc).filter_by(id = newRoom.mobs).first()
+                npc = {
+                    "id": mynpc.id,
+                    "name": mynpc.name,
+                    "description": mynpc.description,
+                    "items": mynpc.items,
+                    "gold": mynpc.gold,
+                    "HP": mynpc.HP,
+                    "isHostile": mynpc.isHostile,
+                    "attack": mynpc.attack
+                }
+            else: #random spawn
+                if randint(0, 4) == 0:
+                    floor = newRoom.floor.split(' ')
+                    monster_list = monster_catalogue["dungeon_1"][floor[1]].split(' ')
+                    spawnThis = monster_list[randint(0, len(monster_list)-1)]
+                    mob = monster_machine[spawnThis]
+                    mob = Npc(
+                        mob[0],
+                        mob[1],
+                        mob[2],
+                        mob[3],
+                        mob[4],
+                        mob[5],
+                        mob[6],
+                        mob[7],
+                    )
+                    db.session.add(mob)
+                    db.session.commit()
+                    mob = db.session.query(Npc).all()[-1]
+
+                    npc = {
+                        "id": mob.id,
+                        "name": mob.name,
+                        "description": mob.description,
+                        "items": mob.items,
+                        "gold": mob.gold,
+                        "HP": mob.HP,
+                        "isHostile": mob.isHostile,
+                        "attack": mob.attack
+                    }
+                    newRoom.mobs = npc["id"]
+                    db.session.commit()
 
             controls = {
                 "user": serialuser,
@@ -108,7 +134,7 @@ def make_a_movement():
 
     elif direction == 'e':
         if current_room.east is None:
-            return 'ya done goofed, no room here'
+            return {"error": 'No room in this direction'}
         else:
             moveTo = current_room.east
             print(f'\nmoveTo: {moveTo}\n')
@@ -150,18 +176,50 @@ def make_a_movement():
             }
 
             npc = None
-            # if newRoom.NPCs is not None:
-            #     mynpc = db.session.query(NPC).filter_by(name = newRoom.NPCs).first()
-            #     npc = {
-            #         "id": mynpc.id,
-            #         "name": mynpc.name,
-            #         "description": mynpc.description,
-            #         "items": mynpc.items,
-            #         "gold": mynpc.gold,
-            #         "HP": mynpc.HP,
-            #         "isHostile": mynpc.isHostile,
-            #         "attack": mynpc.attack
-            #     }
+            if newRoom.mobs is not None:
+                mynpc = db.session.query(Npc).filter_by(id = newRoom.mobs).first()
+                npc = {
+                    "id": mynpc.id,
+                    "name": mynpc.name,
+                    "description": mynpc.description,
+                    "items": mynpc.items,
+                    "gold": mynpc.gold,
+                    "HP": mynpc.HP,
+                    "isHostile": mynpc.isHostile,
+                    "attack": mynpc.attack
+                }
+            else: #random spawn
+                if randint(0, 4) == 0:
+                    floor = newRoom.floor.split(' ')
+                    monster_list = monster_catalogue["dungeon_1"][floor[1]].split(' ')
+                    spawnThis = monster_list[randint(0, len(monster_list)-1)]
+                    mob = monster_machine[spawnThis]
+                    mob = Npc(
+                        mob[0],
+                        mob[1],
+                        mob[2],
+                        mob[3],
+                        mob[4],
+                        mob[5],
+                        mob[6],
+                        mob[7],
+                    )
+                    db.session.add(mob)
+                    db.session.commit()
+                    mob = db.session.query(Npc).all()[-1]
+
+                    npc = {
+                        "id": mob.id,
+                        "name": mob.name,
+                        "description": mob.description,
+                        "items": mob.items,
+                        "gold": mob.gold,
+                        "HP": mob.HP,
+                        "isHostile": mob.isHostile,
+                        "attack": mob.attack
+                    }
+                    newRoom.mobs = npc["id"]
+                    db.session.commit()
 
             controls = {
                 "user": serialuser,
@@ -174,7 +232,7 @@ def make_a_movement():
 
     elif direction == 's':
         if current_room.south is None:
-            return 'ya done goofed, no room here'
+            return {"error": 'No room in this direction'}
         else:
             moveTo = current_room.south
             print(f'\nmoveTo: {moveTo}\n')
@@ -215,18 +273,50 @@ def make_a_movement():
                 "west": newRoom.west
             }
             npc = None
-            # if newRoom.NPCs is not None:
-            #     mynpc = db.session.query(NPC).filter_by(name = newRoom.NPCs).first()
-            #     npc = {
-            #         "id": mynpc.id,
-            #         "name": mynpc.name,
-            #         "description": mynpc.description,
-            #         "items": mynpc.items,
-            #         "gold": mynpc.gold,
-            #         "HP": mynpc.HP,
-            #         "isHostile": mynpc.isHostile,
-            #         "attack": mynpc.attack
-            #     }
+            if newRoom.mobs is not None:
+                mynpc = db.session.query(Npc).filter_by(id = newRoom.mobs).first()
+                npc = {
+                    "id": mynpc.id,
+                    "name": mynpc.name,
+                    "description": mynpc.description,
+                    "items": mynpc.items,
+                    "gold": mynpc.gold,
+                    "HP": mynpc.HP,
+                    "isHostile": mynpc.isHostile,
+                    "attack": mynpc.attack
+                }
+            else: #random spawn
+                if randint(0, 4) == 0:
+                    floor = newRoom.floor.split(' ')
+                    monster_list = monster_catalogue["dungeon_1"][floor[1]].split(' ')
+                    spawnThis = monster_list[randint(0, len(monster_list)-1)]
+                    mob = monster_machine[spawnThis]
+                    mob = Npc(
+                        mob[0],
+                        mob[1],
+                        mob[2],
+                        mob[3],
+                        mob[4],
+                        mob[5],
+                        mob[6],
+                        mob[7],
+                    )
+                    db.session.add(mob)
+                    db.session.commit()
+                    mob = db.session.query(Npc).all()[-1]
+
+                    npc = {
+                        "id": mob.id,
+                        "name": mob.name,
+                        "description": mob.description,
+                        "items": mob.items,
+                        "gold": mob.gold,
+                        "HP": mob.HP,
+                        "isHostile": mob.isHostile,
+                        "attack": mob.attack
+                    }
+                    newRoom.mobs = npc["id"]
+                    db.session.commit()
 
             controls = {
                 "user": serialuser,
@@ -239,7 +329,7 @@ def make_a_movement():
 
     elif direction == 'w':
         if current_room.west is None:
-            return 'ya done goofed, no room here'
+            return {"error": 'No room in this direction'}
         else:
             moveTo = current_room.west
             print(f'\nmoveTo: {moveTo}\n')
@@ -281,18 +371,51 @@ def make_a_movement():
             }
 
             npc = None
-            # if newRoom.NPCs is not None:
-            #     mynpc = db.session.query(NPC).filter_by(name = newRoom.NPCs).first()
-            #     npc = {
-            #         "id": mynpc.id,
-            #         "name": mynpc.name,
-            #         "description": mynpc.description,
-            #         "items": mynpc.items,
-            #         "gold": mynpc.gold,
-            #         "HP": mynpc.HP,
-            #         "isHostile": mynpc.isHostile,
-            #         "attack": mynpc.attack
-            #     }
+            if newRoom.mobs is not None:
+                mynpc = db.session.query(Npc).filter_by(id = newRoom.mobs).first()
+                npc = {
+                    "id": mynpc.id,
+                    "name": mynpc.name,
+                    "description": mynpc.description,
+                    "items": mynpc.items,
+                    "gold": mynpc.gold,
+                    "HP": mynpc.HP,
+                    "isHostile": mynpc.isHostile,
+                    "attack": mynpc.attack
+                }
+                #Add comment to save
+            else: #random spawn
+                if randint(0, 4) == 0:
+                    floor = newRoom.floor.split(' ')
+                    monster_list = monster_catalogue["dungeon_1"][floor[1]].split(' ')
+                    spawnThis = monster_list[randint(0, len(monster_list)-1)]
+                    mob = monster_machine[spawnThis]
+                    mob = Npc(
+                        mob[0],
+                        mob[1],
+                        mob[2],
+                        mob[3],
+                        mob[4],
+                        mob[5],
+                        mob[6],
+                        mob[7],
+                    )
+                    db.session.add(mob)
+                    db.session.commit()
+                    mob = db.session.query(Npc).all()[-1]
+
+                    npc = {
+                        "id": mob.id,
+                        "name": mob.name,
+                        "description": mob.description,
+                        "items": mob.items,
+                        "gold": mob.gold,
+                        "HP": mob.HP,
+                        "isHostile": mob.isHostile,
+                        "attack": mob.attack
+                    }
+                    newRoom.mobs = npc["id"]
+                    db.session.commit()
 
             controls = {
                 "user": serialuser,

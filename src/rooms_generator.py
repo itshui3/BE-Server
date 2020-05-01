@@ -91,10 +91,6 @@ rooms['2-c3'].NPCs = 'merchant'
 rooms['3-e3'].NPCs = 'merchant'
 rooms['4-e1'].NPCs = 'merchant'
 
-rooms['1-a2'].mobs = 'slime'
-rooms['1-c1'].mobs = 'black_rat'
-rooms['1-a5'].mobs = 'goblin'
-
 def print_all_NPCs(rooms):
     for key, room in rooms.items():
         if room.NPCs:
