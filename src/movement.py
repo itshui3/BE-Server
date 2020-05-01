@@ -3,7 +3,7 @@ import jwt
 import os
 from . import db
 from .models import Users, Room, Npc, Merchant, Item
-from .utils import map_rooms
+from .utils import map_rooms, parse_inventory
 
 from .monster_catalogue import monster_catalogue, monster_machine
 from random import randint

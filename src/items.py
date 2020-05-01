@@ -16,7 +16,6 @@ def the_stuff():
     items = db.session.query(Item).all()
     command = None
     command = request.get_json()["command"]
-    item = request.get_json()["item"]
     
     print(f'\nCurrent room: {room.title} items:{room.items}\n')
 
@@ -29,10 +28,10 @@ def the_stuff():
         userItems = parse_inventory(user.items)
     
     if command == 'look':
-        return room_inv
+        return jsonify({"current_room": user.current_room, "gold": user.gold, "items": user.items, "room_inventory": room.items})
 
     if command == 'get':
-
+        item = request.get_json()["item"]
         if item in room_inv:
             if room_inv[item] > 1:
                 room_inv[item] -= 1
@@ -53,10 +52,11 @@ def the_stuff():
                 room.items = unparse_inventory(room_inv)
             
             db.session.commit()
-            return userItems
+            return jsonify({"current_room": user.current_room, "gold": user.gold, "items": user.items, "room_inventory": room.items})
         else:
             return jsonify({"error": "Item not found in room"})
     elif command == 'drop':
+        item = request.get_json()["item"]
         if item in userItems:
 
             if item in room_inv: #check if item is inventory
@@ -77,7 +77,7 @@ def the_stuff():
                     del userItems[item]
                 user.items = unparse_inventory(userItems)
             db.session.commit()
-            return userItems
+            return jsonify({"current_room": user.current_room, "gold": user.gold, "items": user.items, "room_inventory": room.items})
 
         else:
             return jsonify({"error": "Item not found in user inventory"})            
