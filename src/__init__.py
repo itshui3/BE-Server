@@ -12,15 +12,15 @@ load_dotenv()
 
 import os
 
-# import pusher
+import pusher
 
-# PUSHER_ID = os.environ.get("PUSHER_ID")
-# PUSHER_KEY = os.environ.get("PUSHER_KEY")
-# PUSHER_SECRET = os.environ.get("PUSHER_SECRET")
+PUSHER_ID = os.environ.get("PUSHER_ID")
+PUSHER_KEY = os.environ.get("PUSHER_KEY")
+PUSHER_SECRET = os.environ.get("PUSHER_SECRET")
 
-# pusher_client = pusher.Pusher(
-#     app_id=PUSHER_ID, key=PUSHER_KEY, secret=PUSHER_SECRET, cluster="us2", ssl=True
-# )
+pusher_client = pusher.Pusher(
+    app_id=PUSHER_ID, key=PUSHER_KEY, secret=PUSHER_SECRET, cluster="us2", ssl=True
+)
 
 db = SQLAlchemy()  # init orm for building tables/fields/constraints
 
