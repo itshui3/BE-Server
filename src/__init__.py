@@ -12,9 +12,20 @@ load_dotenv()
 
 import os
 
+import pusher
+
+PUSHER_ID = os.environ.get("PUSHER_ID")
+PUSHER_KEY = os.environ.get("PUSHER_KEY")
+PUSHER_SECRET = os.environ.get("PUSHER_SECRET")
+
+pusher_client = pusher.Pusher(
+    app_id=PUSHER_ID, key=PUSHER_KEY, secret=PUSHER_SECRET, cluster="us2", ssl=True
+)
+
 db = SQLAlchemy()  # init orm for building tables/fields/constraints
 
 CORS_ORIGIN = os.environ.get("CORS_ORIGIN")
+
 
 def create_app():
     app = Flask(__name__)
@@ -42,28 +53,44 @@ def create_app():
     # from .public import public
     # app.register_blueprint(public)
 
+    # Message
+    from .messages import messages
+
+    app.register_blueprint(messages)
+
     # Auth Routes
     from .auth import auth
+
     app.register_blueprint(auth)
 
-    playerPrefix = '/player'
+    playerPrefix = "/player"
     # player Routes
 
     from .startgame import startgame
-    app.register_blueprint(startgame, url_prefix=playerPrefix + '/startgame')
+
+    app.register_blueprint(startgame, url_prefix=playerPrefix + "/startgame")
 
     from .movement import movement
-    app.register_blueprint(movement, url_prefix=playerPrefix + '/movement')
+
+    app.register_blueprint(movement, url_prefix=playerPrefix + "/movement")
 
     from .combat import combat
-    app.register_blueprint(combat, url_prefix=playerPrefix + '/combat')
 
-    from .items import items_blueprint
-    app.register_blueprint(items_blueprint, url_prefix=playerPrefix + '/items')
+    app.register_blueprint(combat, url_prefix=playerPrefix + "/combat")
 
-    merchantPrefix = '/merchant'
-    # player Routes
+    # from .items import items_blueprint
+    # app.register_blueprint(items_blueprint, url_prefix=playerPrefix + '/items')
+
+    merchantPrefix = "/merchant"
+    # mechant Routes
     from .merchant import merchant
+
     app.register_blueprint(merchant, url_prefix=merchantPrefix)
+
+    itemsPrefix = "/items"
+    # items Routes
+    from .items import items_blueprint
+
+    app.register_blueprint(items_blueprint, url_prefix=itemsPrefix)
 
     return app

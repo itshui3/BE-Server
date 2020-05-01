@@ -64,17 +64,17 @@ def print_connections(rooms):
 
 #add items to rooms
 rooms['1-a2'].items = 'sword_truth-1 green_potion-1'
-rooms['1-b5'].items = 'green_potion'
-rooms['1-e1'].items = 'helmet'
+rooms['1-b5'].items = 'green_potion-1'
+rooms['1-e1'].items = 'helmet-1'
 
-rooms['2-b4'].items = 'red_potion'
-rooms['2-c5'].items = 'sword_magic'
+rooms['2-b4'].items = 'red_potion-1'
+rooms['2-c5'].items = 'sword_magic-1'
 
-rooms['3-a4'].items = 'white_potion'
-rooms['3-b2'].items = 'chest_armor'
+rooms['3-a4'].items = 'white_potion-1'
+rooms['3-b2'].items = 'chest_armor-1'
 
-rooms['4-c4'].items = 'blue_potion'
-rooms['4-b1'].items = 'sword_destiny'
+rooms['4-c4'].items = 'blue_potion-1'
+rooms['4-b1'].items = 'sword_destiny-1'
 
 #This function prints all items in rooms to check they exist
 def print_all_items(rooms):

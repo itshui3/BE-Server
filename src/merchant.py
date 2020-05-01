@@ -3,7 +3,7 @@ import jwt
 import os
 from . import db
 from .models import Users, Room, Merchant, Item
-from .utils import parse_inventory, unparse_inventory, map_inventory
+from .utils import parse_inventory, unparse_inventory, map_inventory, find_price
 
 merchant = Blueprint('merchant', __name__)
 JWT_SECRET = os.environ.get("SECRET")
@@ -19,6 +19,9 @@ def make_a_merchant():
 
     inventory = parse_inventory(merchant.inventory)
     inventory_details = map_inventory(items, inventory)
+    userItems = {}
+    if user.items is not None:
+        userItems = parse_inventory(user.items)
 
     # print(f'\nmerchant inventory: {inventory}')
     # print(f'\ndetails: {inventory_details}')
@@ -30,44 +33,89 @@ def make_a_merchant():
     elif command == 'buy':
         buy_item = request.get_json()["buy_item"]
         if buy_item is None:
-            return 'buy_item is not specified'
+            return jsonify({"error":'buy_item is not specified'})
 
         elif buy_item in inventory:
             if inventory[buy_item] < 1:
-                return "Item is out of stock"
+                return jsonify({"error":"Item is out of stock"})
             else:
-                price = 0
-
-                for item in items:
-                    if buy_item == item.name:
-                        price = item.price
-
+                price = find_price(buy_item, items)
+                print(f'Price found: {price}')
                 inventory[buy_item] -= 1
-                newInv = unparse_inventory(inventory)
-                merchant.inventory = str(newInv)
-                user.gold = user.gold - price
-                userItems = {}
+                updateInv = unparse_inventory(inventory)
+                merchant.inventory = str(updateInv)
 
-                if user.items: #check if user has items
-                    userItems = parse_inventory(user.items) #parse user items into dict
+                if price > user.gold:
+                    return jsonify({"error":"You do not have enough gold to purchase"})
+                else: #if user has enough gold
+                    user.gold = user.gold - price
 
-                    if buy_item in userItems: #check if item is already in user items
-                        userItems[buy_item] += 1
+                    if user.items: #check if user has items
 
-                    else: #if user doesn't already have item, add
-                        userItems.update({buy_item: 1})
-                    user.items = unparse_inventory(userItems) #unparse user items into string
+                        if buy_item in userItems: #check if item is already in user items
+                            userItems[buy_item] += 1
 
-                else: #if user doesn't have items, create item&qty
-                    userItems = {buy_item: 1}
-                    user.items = f'{buy_item}-1'
+                        else: #if user doesn't already have item, add
+                            userItems.update({buy_item: 1})
+                        user.items = unparse_inventory(userItems) #unparse user items into string
 
-                db.session.commit()
-                userItems.update({"gold": user.gold})
-                return userItems
+                    else: #if user doesn't have items, create item&qty
+                        userItems = {buy_item: 1}
+                        user.items = f'{buy_item}-1'
+
+                    db.session.commit()
+                    userItems.update({"gold": user.gold, "items": user.items})
+                    return userItems
 
         else:
-            return 'Item is not in inventory'
+            return jsonify({"error":'Item is not in inventory'})
+    elif command == 'sell':
+        sell_item = request.get_json()["sell_item"]
+        if sell_item is None: #check if sell_item exists
+            return jsonify({"error":"sell_item not specified"})
+        else: #if sell_item exists
+            if sell_item in userItems:
+                print(f'Qty in user items: {userItems[sell_item]}')
+                if userItems[sell_item] > 1: #check item qty in user inventory
+                    userItems[sell_item] -= 1
+                    updateItems = unparse_inventory(userItems)
+                    user.items = str(updateItems)
+                    #add item to merchant inventory
+                    if sell_item in inventory:
+                        inventory[sell_item] += 1
+                        merchant.inventory = unparse_inventory(inventory)
+                        price = find_price(sell_item, items)
+                        user.gold += (price - 10)
+                    db.session.commit()
+                    userItems.update({"gold": user.gold, "items": user.items})
+                    return userItems
 
+                elif userItems[sell_item] == 1: #check if user inventory is last one
+                    print('deleting')
+                    del userItems[sell_item]
+                    if userItems:#check if there are user items left
+                        updateItems = unparse_inventory(userItems)
+                        user.items = str(updateItems)
+                        inventory[sell_item] += 1
+                        merchant.inventory = unparse_inventory(inventory)
+                        price = find_price(sell_item, items)
+                        user.gold += (price - 10)
+                        db.session.commit()
+                        userItems.update({"gold": user.gold, "items": user.items})
+                        return userItems
+                    else:
+                        inventory[sell_item] += 1
+                        merchant.inventory = unparse_inventory(inventory)
+                        price = find_price(sell_item, items)
+                        user.gold += (price - 10)
+                        user.items = None
+                        db.session.commit()
+                        userItems.update({"gold": user.gold, "items": user.items})
+                        return userItems
+                # return userItems
+            else:
+                return jsonify({"error":'Item is not in user items'})
+        
+        # return "Sell stuff"
     else:
-        return "Incorrect or unknown command"
+        return jsonify({"error":"Incorrect or unknown command"})

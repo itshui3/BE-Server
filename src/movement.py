@@ -57,6 +57,7 @@ def make_a_movement():
                 "HP": int(user.HP),
                 "MP": int(user.MP),
                 "attack": int(user.attack),
+                "items": str(user.items),
                 "gold": int(user.gold),
                 "encounter_cd": int(user.encounter_cd),
                 "current_room": str(user.current_room)
@@ -154,6 +155,7 @@ def make_a_movement():
                 "HP": int(user.HP),
                 "MP": int(user.MP),
                 "attack": int(user.attack),
+                "items": str(user.items),
                 "gold": int(user.gold),
                 "encounter_cd": int(user.encounter_cd),
                 "current_room": str(user.current_room)
@@ -251,6 +253,7 @@ def make_a_movement():
                 "HP": int(user.HP),
                 "MP": int(user.MP),
                 "attack": int(user.attack),
+                "items": str(user.items),
                 "gold": int(user.gold),
                 "encounter_cd": int(user.encounter_cd),
                 "current_room": str(user.current_room)
@@ -347,6 +350,7 @@ def make_a_movement():
                 "HP": int(user.HP),
                 "MP": int(user.MP),
                 "attack": int(user.attack),
+                "items": str(user.items),
                 "gold": int(user.gold),
                 "encounter_cd": int(user.encounter_cd),
                 "current_room": str(user.current_room)
