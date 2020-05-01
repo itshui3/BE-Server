@@ -78,8 +78,8 @@ def make_a_movement():
             }
 
             npc = None
-            if newRoom.NPCs is not None:
-                mynpc = db.session.query(Npc).filter_by(ref = newRoom.NPCs).first()
+            if newRoom.mobs is not None:
+                mynpc = db.session.query(Npc).filter_by(id = newRoom.mobs).first()
                 npc = {
                     "id": mynpc.id,
                     "name": mynpc.name,
@@ -120,7 +120,7 @@ def make_a_movement():
                         "isHostile": mob.isHostile,
                         "attack": mob.attack
                     }
-                    newRoom.NPCs = npc["id"]
+                    newRoom.mobs = npc["id"]
                     db.session.commit()
 
             controls = {
@@ -176,8 +176,8 @@ def make_a_movement():
             }
 
             npc = None
-            if newRoom.NPCs is not None:
-                mynpc = db.session.query(Npc).filter_by(ref = newRoom.NPCs).first()
+            if newRoom.mobs is not None:
+                mynpc = db.session.query(Npc).filter_by(id = newRoom.mobs).first()
                 npc = {
                     "id": mynpc.id,
                     "name": mynpc.name,
@@ -218,7 +218,7 @@ def make_a_movement():
                         "isHostile": mob.isHostile,
                         "attack": mob.attack
                     }
-                    newRoom.NPCs = npc["id"]
+                    newRoom.mobs = npc["id"]
                     db.session.commit()
 
             controls = {
@@ -273,8 +273,8 @@ def make_a_movement():
                 "west": newRoom.west
             }
             npc = None
-            if newRoom.NPCs is not None:
-                mynpc = db.session.query(Npc).filter_by(ref = newRoom.NPCs).first()
+            if newRoom.mobs is not None:
+                mynpc = db.session.query(Npc).filter_by(id = newRoom.mobs).first()
                 npc = {
                     "id": mynpc.id,
                     "name": mynpc.name,
@@ -315,7 +315,7 @@ def make_a_movement():
                         "isHostile": mob.isHostile,
                         "attack": mob.attack
                     }
-                    newRoom.NPCs = npc["id"]
+                    newRoom.mobs = npc["id"]
                     db.session.commit()
 
             controls = {
@@ -371,8 +371,8 @@ def make_a_movement():
             }
 
             npc = None
-            if newRoom.NPCs is not None:
-                mynpc = db.session.query(Npc).filter_by(ref = newRoom.NPCs).first()
+            if newRoom.mobs is not None:
+                mynpc = db.session.query(Npc).filter_by(id = newRoom.mobs).first()
                 npc = {
                     "id": mynpc.id,
                     "name": mynpc.name,
@@ -413,7 +413,7 @@ def make_a_movement():
                         "isHostile": mob.isHostile,
                         "attack": mob.attack
                     }
-                    newRoom.NPCs = npc["id"]
+                    newRoom.mobs = npc["id"]
                     db.session.commit()
 
             controls = {
