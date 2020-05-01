@@ -22,7 +22,8 @@ def the_stuff():
 
     room_inv = {}
     if room.items is None: #check if there are items in room
-        return jsonify({"error":'There are no items in the room'})
+        # return jsonify({"error":'There are no items in the room'})
+        print('No items in the room')
     else:
         room_inv = parse_inventory(room.items)
     
@@ -36,19 +37,23 @@ def the_stuff():
             if room_inv[item] > 1:
                 room_inv[item] -= 1
                 room.items = unparse_inventory(room_inv)
-                userItems.update(room_inv[item])
+                if item in userItems:
+                    print('already in userItems - adding', userItems)
+                    userItems[item] += 1
+                else:
+                    userItems.update({item: 1})
+                user.items = unparse_inventory(userItems)
+                print(f'\nRoom items >1 after get: {room_inv}-length: {len(room_inv)}\n')
             else:
-                new_item = {item: 1}
-                userItems.update(new_item)
+                if item in userItems:
+                    print('already in userItems - adding', userItems)
+                    userItems[item] += 1
+                else:
+                    userItems.update({item: 1})
                 user.items = unparse_inventory(userItems)
                 del room_inv[item]
+                room.items = unparse_inventory(room_inv)
                 print(f'\nRoom items after get: {room_inv}-length: {len(room_inv)}\n')
-                if len(room_inv) == 0:
-                    print('no items left')
-                    room.items = None
-                else:
-                    print('some items left')
-                    room.items = unparse_inventory(room_inv)
                 
             db.session.commit()
             return userItems
@@ -56,27 +61,29 @@ def the_stuff():
             return jsonify({"error": "Item not found in room"})
     elif command == 'drop':
         if item in userItems:
-            if room_inv[item] > 1:
+            print(f'\nRoom items drop: {room_inv}-length: {len(room_inv)}\n')
+            if item in room_inv: #check if item is inventory
                 room_inv[item] += 1
                 room.items = unparse_inventory(room_inv)
-                #remove item from user inventory
-                del userItems[item]
+                if userItems[item] > 1:
+                    userItems[item] -= 1
+                else:
+                    del userItems[item]
                 user.items = unparse_inventory(userItems)
-            
-            else: #if room inventory is none
-                new_item = {item: 1}
-                room_inv.update(new_item)
-                room_inv.items = unparse_inventory(room_inv)
-                del userItems[item]
+    
+            else: #if item is not in room inventory
+                room_inv.update({item: 1})
+                room.items = unparse_inventory(room_inv)
+                if userItems[item] > 1:
+                    userItems[item] -= 1
+                else:
+                    del userItems[item]
                 user.items = unparse_inventory(userItems)
-            # db.session.commit()
+            db.session.commit()
             return userItems
 
-                
-
         else:
-            return jsonify({"error": "Item not found in user inventory"})
-            
+            return jsonify({"error": "Item not found in user inventory"})            
 
     else:
         return jsonify({"error": "Command invalid... check your spelling?"})
