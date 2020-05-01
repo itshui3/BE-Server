@@ -31,7 +31,7 @@ def make_a_movement():
     if current_room.mobs is not None:
         # Need to return interface too
         print(current_room.mobs)
-        return {"error": 'monster present, deal with it before leaving the room'}
+        return {"error": 'Monster present, deal with it before leaving the room!'}
 
     # Directional Interface
     if direction == 'n':
@@ -123,11 +123,18 @@ def make_a_movement():
                     newRoom.mobs = npc["id"]
                     db.session.commit()
 
+            message = {
+                "message": [
+                    f"You have been attacked by a monster"
+                ]
+            }
+
             controls = {
                 "user": serialuser,
                 "room": serialroom,
                 "npc": npc,
-                "map": floor_map
+                "map": floor_map,
+                "combat": message
             }
 
             return controls

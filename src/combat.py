@@ -26,7 +26,28 @@ def execute_combat_command():
         error = {
             "error": 'No monster present.'
         }
-        return error
+        message = {
+            "message": ['No monster present.']
+        }
+        cerealuser = {
+            "id": int(user.id),
+            "username": str(user.username),
+            "character_name": str(user.character_name),
+            "character_type": str(user.character_type),
+            "portrait": str(user.portrait),
+            "HP": int(user.HP),
+            "MP": int(user.MP),
+            "attack": int(user.attack),
+            "gold": int(user.gold),
+            "encounter_cd": int(user.encounter_cd),
+            "current_room": str(user.current_room)
+        }
+        controls = {
+            "combat": message,
+            "user": cerealuser,
+            "error": error,
+        }
+        return controls
 
     else:
         

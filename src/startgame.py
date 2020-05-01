@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 import jwt
 import os
 from . import db
-from .models import Users, Room
+from .models import Users, Room, Npc, Merchant
 from .utils import map_rooms
 
 startgame = Blueprint('startgame', __name__)
@@ -13,7 +13,6 @@ def get_character_info():
     user = db.session.query(Users).filter_by(id = userId).first()
     room = db.session.query(Room).filter_by(title = user.current_room).first()
     floor = db.session.query(Room).filter_by(floor = room.floor).all()
-
     floor_map = map_rooms(floor)
 
     cerealuser = {
@@ -45,11 +44,36 @@ def get_character_info():
         "south": room.south,
         "west": room.west
     }
+    cerealmob = None
+    if room.mobs is not None:
+        npc = db.session.query(Npc).filter_by(id = room.mobs).first()
+        cerealmob = {
+            "id": npc.id,
+            "name": npc.name,
+            "description": npc.description,
+            "items": npc.items,
+            "gold": npc.gold,
+            "HP": npc.HP,
+            "isHostile": npc.isHostile,
+            "attack": npc.attack
+        }
+
+    if room.NPCs is not None:
+        npc = db.session.query(Merchant).filter_by(name = room.NPCs).first()
+        cerealmob = {
+            "id": npc.id,
+            "name": npc.name,
+            "inventory": npc.inventory,
+            "gold": npc.gold,
+            "HP": npc.HP,
+            "attack": npc.attack
+        }
 
     controls = {
         "user": cerealuser,
         "room": serialroom,
-        "map": floor_map
+        "map": floor_map,
+        "npc": cerealmob
     }
 
     return controls
