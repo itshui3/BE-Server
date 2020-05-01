@@ -5,7 +5,7 @@ from . import db
 from .models import Users, Room, Npc, Merchant, Item
 from .utils import map_rooms
 
-from .monster_catalogue import monster_catalogue
+from .monster_catalogue import monster_catalogue, monster_machine
 from random import randint
 
 movement = Blueprint('movement', __name__)
@@ -29,11 +29,10 @@ def make_a_movement():
 
 
     if current_room.NPCs is not None:
-        # Need to return interface too
-        print(current_room.mobs)
+        print(current_room.NPCs)
         return {"error": 'monster present, deal with it before leaving the room'}
 
-    # Directional Interface
+    # Directional Interface: Checks direction in post and performs request
     if direction == 'n':
         if current_room.north is None:
             return {"error": 'No room in this direction'}
