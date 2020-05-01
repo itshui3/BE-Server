@@ -24,7 +24,7 @@ def execute_combat_command():
         else:
             print('\n\n', f"{user.character_name} attempted attacking in a Room not occupied by a hostile.", '\n\n')
         message = {
-            "combat": {"message": ['No monster present.']}
+            "message": ['No monster present.']
         }
         cerealuser = {
             "id": int(user.id),
