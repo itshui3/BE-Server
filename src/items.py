@@ -28,7 +28,7 @@ def the_stuff():
         userItems = parse_inventory(user.items)
     
     if command == 'look':
-        return room_inv
+        return jsonify({"current_room": user.current_room, "gold": user.gold, "items": user.items, "room_inventory": room.items})
 
     if command == 'get':
         item = request.get_json()["item"]
@@ -52,7 +52,7 @@ def the_stuff():
                 room.items = unparse_inventory(room_inv)
             
             db.session.commit()
-            return userItems
+            return jsonify({"current_room": user.current_room, "gold": user.gold, "items": user.items, "room_inventory": room.items})
         else:
             return jsonify({"error": "Item not found in room"})
     elif command == 'drop':
@@ -77,7 +77,7 @@ def the_stuff():
                     del userItems[item]
                 user.items = unparse_inventory(userItems)
             db.session.commit()
-            return userItems
+            return jsonify({"current_room": user.current_room, "gold": user.gold, "items": user.items, "room_inventory": room.items})
 
         else:
             return jsonify({"error": "Item not found in user inventory"})            
