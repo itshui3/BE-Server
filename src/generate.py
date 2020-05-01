@@ -43,6 +43,7 @@ commit_merchant(merchant)
 
 from .monsters_generator import monsters
 
+# Going to deprecate this method of spawning mobs
 def commit_monster(monsters):
     with app.app_context():
         delete_rows = db.session.query(Npc).delete()
