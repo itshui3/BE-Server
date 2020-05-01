@@ -21,16 +21,16 @@ def the_stuff():
     print(f'\nCurrent room: {room.title} items:{room.items}\n')
 
     room_inv = {}
-    if room.items is None: #check if there are items in room
-        # return jsonify({"error":'There are no items in the room'})
-        print('No items in the room')
-    else:
+    if room.items:#check if there are items in room
         room_inv = parse_inventory(room.items)
     
     userItems = {}
     if user.items is not None: #parse user items if they are setup
         userItems = parse_inventory(user.items)
     
+    if command == 'look':
+        return room_inv
+
     if command == 'get':
 
         if item in room_inv:
@@ -38,30 +38,27 @@ def the_stuff():
                 room_inv[item] -= 1
                 room.items = unparse_inventory(room_inv)
                 if item in userItems:
-                    print('already in userItems - adding', userItems)
                     userItems[item] += 1
                 else:
                     userItems.update({item: 1})
                 user.items = unparse_inventory(userItems)
-                print(f'\nRoom items >1 after get: {room_inv}-length: {len(room_inv)}\n')
+
             else:
                 if item in userItems:
-                    print('already in userItems - adding', userItems)
                     userItems[item] += 1
                 else:
                     userItems.update({item: 1})
                 user.items = unparse_inventory(userItems)
                 del room_inv[item]
                 room.items = unparse_inventory(room_inv)
-                print(f'\nRoom items after get: {room_inv}-length: {len(room_inv)}\n')
-                
+            
             db.session.commit()
             return userItems
         else:
             return jsonify({"error": "Item not found in room"})
     elif command == 'drop':
         if item in userItems:
-            print(f'\nRoom items drop: {room_inv}-length: {len(room_inv)}\n')
+
             if item in room_inv: #check if item is inventory
                 room_inv[item] += 1
                 room.items = unparse_inventory(room_inv)
