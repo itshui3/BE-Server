@@ -123,11 +123,18 @@ def make_a_movement():
                     newRoom.mobs = npc["id"]
                     db.session.commit()
 
+            message = {
+                "message": [
+                    f"You have been attacked by a monster"
+                ]
+            }
+
             controls = {
                 "user": serialuser,
                 "room": serialroom,
                 "npc": npc,
-                "map": floor_map
+                "map": floor_map,
+                "combat": message
             }
 
             return controls
