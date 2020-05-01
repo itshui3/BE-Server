@@ -15,7 +15,7 @@ def make_room(Room, title, description, floor):
 def make_floor(Room):
     return {
     #room_1-key: make_room(Room, title, description, floor)
-    "1-a1": make_room(Room, "1-a1", "This is the beginning", "Floor 1"),
+    "1-a1": make_room(Room, "1-a1", "This is the beginning...", "Floor 1"),
     "1-a2": make_room(Room, "1-a2", "Thick cobwebs fill the corners of the room, and wisps of webbing hang from the ceiling and waver in a wind you can barely feel. One corner of the ceiling has a particularly large clot of webbing within which a goblin's bones are tangled.", "Floor 1"),
     "1-a3": make_room(Room, "1-a3", "Tapestries decorate the walls of this room. Although they may once have been brilliant in hue, they now hang in graying tatters. Despite the damage of time and neglect, you can perceive once-grand images of wizards' towers, magical beasts, and symbols of spellcasting. The tapestry that is in the best condition bulges out weirdly, as though someone stands behind it (an armless statue of a female human spellcaster).", "Floor 1"),
     "1-a4": make_room(Room, "1-a4", "Rats inside the room shriek when they hear the door open, then they run in all directions from a putrid corpse lying in the center of the floor. As these creatures crowd around the edges of the room, seeking to crawl through a hole in one corner, they fight one another. The stinking corpse in the middle of the room looks human, but the damage both time and the rats have wrought are enough to make determining its race by appearance an extremely difficult task at best.", "Floor 1"),
