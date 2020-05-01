@@ -31,7 +31,7 @@ def login():
     user = Users.query.filter_by(username=req["username"]).first()
 
     if not user or not check_password_hash(user.password, req["password"]):
-        return "Sorry, no soup for you!"
+        return {"error": "Sorry, no soup for you!"}
     else:
         payload = {
             "user_id": user.id,
@@ -49,7 +49,7 @@ def register_request():
     user = Users.query.filter_by(username=req["username"]).first()
 
     if user:
-        return "Username address already exists"
+        return {"error": "Username already exists"}
     # try:
     #     user = db.session.query(Users).filter_by(username = req["username"])
 
@@ -113,4 +113,4 @@ def register_request():
         return json_response({"key": jwt_token.decode("ascii")})
 
     else:
-        return "Passwords don't match"
+        return {"error": "Passwords don't match"}
