@@ -4,7 +4,7 @@ import os
 from . import db
 from .models import Users, Room, Npc, Merchant
 from .utils import map_rooms
-
+# Add a comment to remerge
 startgame = Blueprint('startgame', __name__)
 JWT_SECRET = os.environ.get("SECRET")
 @startgame.route('/', methods=['GET'])
