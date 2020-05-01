@@ -53,6 +53,11 @@ def create_app():
     # from .public import public
     # app.register_blueprint(public)
 
+    # Message
+    from .messages import messages
+
+    app.register_blueprint(messages)
+
     # Auth Routes
     from .auth import auth
 
@@ -62,26 +67,30 @@ def create_app():
     # player Routes
 
     from .startgame import startgame
-    app.register_blueprint(startgame, url_prefix=playerPrefix + '/startgame')
+
+    app.register_blueprint(startgame, url_prefix=playerPrefix + "/startgame")
 
     from .movement import movement
 
     app.register_blueprint(movement, url_prefix=playerPrefix + "/movement")
 
     from .combat import combat
-    app.register_blueprint(combat, url_prefix=playerPrefix + '/combat')
+
+    app.register_blueprint(combat, url_prefix=playerPrefix + "/combat")
 
     # from .items import items_blueprint
     # app.register_blueprint(items_blueprint, url_prefix=playerPrefix + '/items')
 
-    merchantPrefix = '/merchant'
+    merchantPrefix = "/merchant"
     # mechant Routes
     from .merchant import merchant
+
     app.register_blueprint(merchant, url_prefix=merchantPrefix)
 
-    itemsPrefix = '/items'
+    itemsPrefix = "/items"
     # items Routes
     from .items import items_blueprint
+
     app.register_blueprint(items_blueprint, url_prefix=itemsPrefix)
 
     return app
