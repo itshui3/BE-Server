@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: cf92dbaa9ffe
+Revision ID: 442fc9639e76
 Revises: 
-Create Date: 2020-04-30 20:58:00.226679
+Create Date: 2020-04-30 22:42:36.489578
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'cf92dbaa9ffe'
+revision = '442fc9639e76'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -58,9 +58,7 @@ def upgrade():
     sa.Column('HP', sa.Integer(), nullable=True),
     sa.Column('isHostile', sa.Boolean(), nullable=True),
     sa.Column('attack', sa.Integer(), nullable=True),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('name'),
-    sa.UniqueConstraint('ref')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('room',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -69,7 +67,7 @@ def upgrade():
     sa.Column('floor', sa.String(length=20), nullable=True),
     sa.Column('items', sa.String(length=1024), nullable=True),
     sa.Column('NPCs', sa.String(length=1024), nullable=True),
-    sa.Column('mobs', sa.String(length=1024), nullable=True),
+    sa.Column('mobs', sa.Integer(), nullable=True),
     sa.Column('north', sa.String(length=20), nullable=True),
     sa.Column('east', sa.String(length=20), nullable=True),
     sa.Column('south', sa.String(length=20), nullable=True),
