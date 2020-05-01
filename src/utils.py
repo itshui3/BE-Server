@@ -4,16 +4,22 @@ def parse_inventory(parse_list):
     #seperate list by space (item) and - (qty)
     parsed_list = re.split(r'[-\s*]', parse_list)
     inventory = {}
-    for i in range(0, len(parsed_list), 2):
-        item = parsed_list[i]
-        qty = int(parsed_list[i+1])
-        inventory.update({item:qty})
+    if len(parsed_list) > 1:
+        for i in range(0, len(parsed_list), 2):
+            item = parsed_list[i]
+            qty = int(parsed_list[i+1])
+            inventory.update({item:qty})
+    else:
+        print(parsed_list)
+        # inventory.update(parsed_list)
     return inventory
 
-def unparse_inventory(uparsed_dict):
+def unparse_inventory(unparsed_dict):
     #combine inventory dict to string: 'item-qty item-qty'
+    if len(unparsed_dict) == 0:
+        return None
     newList = ""
-    for item, qty in uparsed_dict.items():
+    for item, qty in unparsed_dict.items():
         newList = newList + f'{item}-{qty} '
     newList = newList[:-1] #remove last space at end of string
     return newList
