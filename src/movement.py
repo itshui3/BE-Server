@@ -77,7 +77,7 @@ def make_a_movement():
 
             npc = None
             if newRoom.NPCs is not None:
-                mynpc = db.session.query(Npc).filter_by(ref = newRoom.NPCs).first()
+                mynpc = db.session.query(Npc).filter_by(id = newRoom.NPCs).first()
                 npc = {
                     "id": mynpc.id,
                     "name": mynpc.name,
@@ -93,18 +93,29 @@ def make_a_movement():
                     floor = newRoom.floor.split(' ')
                     monster_list = monster_catalogue["dungeon_1"][floor[1]].split(' ')
                     spawnThis = monster_list[randint(0, len(monster_list)-1)]
-                    mynpc = db.session.query(Npc).filter_by(ref = spawnThis).first()
+                    mobAttrs = monster_machine[spawnThis]
+                    mob = Npc(
+                        mobAttrs[0],
+                        mobAttrs[1],
+                        mobAttrs[2],
+                        mobAttrs[3],
+                        mobAttrs[4],
+                        mobAttrs[5],
+                        mobAttrs[6],
+                        mobAttrs[7]
+                    )
                     npc = {
-                        "id": mynpc.id,
-                        "name": mynpc.name,
-                        "description": mynpc.description,
-                        "items": mynpc.items,
-                        "gold": mynpc.gold,
-                        "HP": mynpc.HP,
-                        "isHostile": mynpc.isHostile,
-                        "attack": mynpc.attack
+                        "id": mob.id,
+                        "name": mob.name,
+                        "description": mob.description,
+                        "items": mob.items,
+                        "gold": mob.gold,
+                        "HP": mob.HP,
+                        "isHostile": mob.isHostile,
+                        "attack": mob.attack
                     }
-                    newRoom.NPCs = spawnThis
+                    newRoom.NPCs = mob.id
+                    db.session.add(mob)
                     db.session.commit()
 
             controls = {
@@ -160,7 +171,7 @@ def make_a_movement():
 
             npc = None
             if newRoom.NPCs is not None:
-                mynpc = db.session.query(Npc).filter_by(ref = newRoom.NPCs).first()
+                mynpc = db.session.query(Npc).filter_by(id = newRoom.NPCs).first()
                 npc = {
                     "id": mynpc.id,
                     "name": mynpc.name,
@@ -176,20 +187,30 @@ def make_a_movement():
                     floor = newRoom.floor.split(' ')
                     monster_list = monster_catalogue["dungeon_1"][floor[1]].split(' ')
                     spawnThis = monster_list[randint(0, len(monster_list)-1)]
-                    mynpc = db.session.query(Npc).filter_by(ref = spawnThis).first()
+                    mobAttrs = monster_machine[spawnThis]
+                    mob = Npc(
+                        mobAttrs[0],
+                        mobAttrs[1],
+                        mobAttrs[2],
+                        mobAttrs[3],
+                        mobAttrs[4],
+                        mobAttrs[5],
+                        mobAttrs[6],
+                        mobAttrs[7]
+                    )
                     npc = {
-                        "id": mynpc.id,
-                        "name": mynpc.name,
-                        "description": mynpc.description,
-                        "items": mynpc.items,
-                        "gold": mynpc.gold,
-                        "HP": mynpc.HP,
-                        "isHostile": mynpc.isHostile,
-                        "attack": mynpc.attack
+                        "id": mob.id,
+                        "name": mob.name,
+                        "description": mob.description,
+                        "items": mob.items,
+                        "gold": mob.gold,
+                        "HP": mob.HP,
+                        "isHostile": mob.isHostile,
+                        "attack": mob.attack
                     }
-                    newRoom.NPCs = spawnThis
+                    newRoom.NPCs = mob.id
+                    db.session.add(mob)
                     db.session.commit()
-                    print('randomly spawned mob', npc)
 
             controls = {
                 "user": serialuser,
@@ -243,7 +264,7 @@ def make_a_movement():
             }
             npc = None
             if newRoom.NPCs is not None:
-                mynpc = db.session.query(Npc).filter_by(ref = newRoom.NPCs).first()
+                mynpc = db.session.query(Npc).filter_by(id = newRoom.NPCs).first()
                 npc = {
                     "id": mynpc.id,
                     "name": mynpc.name,
@@ -259,20 +280,30 @@ def make_a_movement():
                     floor = newRoom.floor.split(' ')
                     monster_list = monster_catalogue["dungeon_1"][floor[1]].split(' ')
                     spawnThis = monster_list[randint(0, len(monster_list)-1)]
-                    mynpc = db.session.query(Npc).filter_by(ref = spawnThis).first()
+                    mobAttrs = monster_machine[spawnThis]
+                    mob = Npc(
+                        mobAttrs[0],
+                        mobAttrs[1],
+                        mobAttrs[2],
+                        mobAttrs[3],
+                        mobAttrs[4],
+                        mobAttrs[5],
+                        mobAttrs[6],
+                        mobAttrs[7]
+                    )
                     npc = {
-                        "id": mynpc.id,
-                        "name": mynpc.name,
-                        "description": mynpc.description,
-                        "items": mynpc.items,
-                        "gold": mynpc.gold,
-                        "HP": mynpc.HP,
-                        "isHostile": mynpc.isHostile,
-                        "attack": mynpc.attack
+                        "id": mob.id,
+                        "name": mob.name,
+                        "description": mob.description,
+                        "items": mob.items,
+                        "gold": mob.gold,
+                        "HP": mob.HP,
+                        "isHostile": mob.isHostile,
+                        "attack": mob.attack
                     }
-                    newRoom.NPCs = spawnThis
+                    newRoom.NPCs = mob.id
+                    db.session.add(mob)
                     db.session.commit()
-                    print('randomly spawned mob', npc)
 
             controls = {
                 "user": serialuser,
@@ -327,7 +358,7 @@ def make_a_movement():
 
             npc = None
             if newRoom.NPCs is not None:
-                mynpc = db.session.query(Npc).filter_by(ref = newRoom.NPCs).first()
+                mynpc = db.session.query(Npc).filter_by(id = newRoom.NPCs).first()
                 npc = {
                     "id": mynpc.id,
                     "name": mynpc.name,
@@ -343,19 +374,29 @@ def make_a_movement():
                     floor = newRoom.floor.split(' ')
                     monster_list = monster_catalogue["dungeon_1"][floor[1]].split(' ')
                     spawnThis = monster_list[randint(0, len(monster_list)-1)]
-                    mynpc = db.session.query(Npc).filter_by(ref = spawnThis).first()
+                    mobAttrs = monster_machine[spawnThis]
+                    mob = Npc(
+                        mobAttrs[0],
+                        mobAttrs[1],
+                        mobAttrs[2],
+                        mobAttrs[3],
+                        mobAttrs[4],
+                        mobAttrs[5],
+                        mobAttrs[6],
+                        mobAttrs[7]
+                    )
                     npc = {
-                        "id": mynpc.id,
-                        "name": mynpc.name,
-                        "description": mynpc.description,
-                        "items": mynpc.items,
-                        "gold": mynpc.gold,
-                        "HP": mynpc.HP,
-                        "isHostile": mynpc.isHostile,
-                        "attack": mynpc.attack
+                        "id": mob.id,
+                        "name": mob.name,
+                        "description": mob.description,
+                        "items": mob.items,
+                        "gold": mob.gold,
+                        "HP": mob.HP,
+                        "isHostile": mob.isHostile,
+                        "attack": mob.attack
                     }
-                    print('randomly spawned mob', npc)
-                    newRoom.NPCs = spawnThis
+                    newRoom.NPCs = mob.id
+                    db.session.add(mob)
                     db.session.commit()
 
             controls = {
