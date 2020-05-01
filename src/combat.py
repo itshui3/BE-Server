@@ -148,8 +148,7 @@ def execute_combat_command():
 
             message = {
                 "message": [
-                    "You ran away from the monster, good job.",
-                    "Running away is op right now because it always succeeds with no penalty."
+                    "You ran away from the monster, good job."
                 ]
             }
 
