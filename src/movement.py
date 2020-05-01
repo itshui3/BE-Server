@@ -91,7 +91,7 @@ def make_a_movement():
                     "attack": mynpc.attack
                 }
             else: #random spawn
-                if randint(0, 4) == 0:
+                if randint(0, 2) == 0:
                     floor = newRoom.floor.split(' ')
                     monster_list = monster_catalogue["dungeon_1"][floor[1]].split(' ')
                     spawnThis = monster_list[randint(0, len(monster_list)-1)]
@@ -189,7 +189,7 @@ def make_a_movement():
                     "attack": mynpc.attack
                 }
             else: #random spawn
-                if randint(0, 4) == 0:
+                if randint(0, 2) == 0:
                     floor = newRoom.floor.split(' ')
                     monster_list = monster_catalogue["dungeon_1"][floor[1]].split(' ')
                     spawnThis = monster_list[randint(0, len(monster_list)-1)]
@@ -286,7 +286,7 @@ def make_a_movement():
                     "attack": mynpc.attack
                 }
             else: #random spawn
-                if randint(0, 4) == 0:
+                if randint(0, 2) == 0:
                     floor = newRoom.floor.split(' ')
                     monster_list = monster_catalogue["dungeon_1"][floor[1]].split(' ')
                     spawnThis = monster_list[randint(0, len(monster_list)-1)]
@@ -385,7 +385,7 @@ def make_a_movement():
                 }
                 #Add comment to save
             else: #random spawn
-                if randint(0, 4) == 0:
+                if randint(0, 2) == 0:
                     floor = newRoom.floor.split(' ')
                     monster_list = monster_catalogue["dungeon_1"][floor[1]].split(' ')
                     spawnThis = monster_list[randint(0, len(monster_list)-1)]
