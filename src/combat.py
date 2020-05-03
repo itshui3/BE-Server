@@ -17,15 +17,13 @@ def execute_combat_command():
     command = request.get_json()["command"]
 
     current_room = db.session.query(Room).filter_by(title = user.current_room).first()
-
+    print('outside current_room.mobs check', current_room)
     if current_room.mobs is None:
+        print('in current_room.mobs check', current_room)
         if command == 'run':
             print('\n\n', f"{user.character_name} started running around.", '\n\n')
         else:
             print('\n\n', f"{user.character_name} attempted attacking in a Room not occupied by a hostile.", '\n\n')
-        error = {
-            "error": 'No monster present.'
-        }
         message = {
             "message": ['No monster present.']
         }
@@ -42,10 +40,23 @@ def execute_combat_command():
             "encounter_cd": int(user.encounter_cd),
             "current_room": str(user.current_room)
         }
+        cerealroom = {
+            "id": current_room.id,
+            "title": current_room.title,
+            "description": current_room.description,
+            "floor": current_room.floor,
+            "items": current_room.items,
+            "NPCs": current_room.NPCs,
+            "mobs": current_room.mobs,
+            "north": current_room.north,
+            "east": current_room.east,
+            "south": current_room.south,
+            "west": current_room.west
+        }
         controls = {
             "combat": message,
             "user": cerealuser,
-            "error": error,
+            "room": cerealroom
         }
         return controls
 
